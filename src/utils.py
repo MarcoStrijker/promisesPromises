@@ -42,10 +42,11 @@ def progress(count: int, total: int, suffix: str = None):
     percents = " " * (4 - len(percents)) + percents
 
     # Create the progress bar.
-    bar = '=' * filled_len + '-' * (bar_len - filled_len)
+    bar_graphics = '=' * filled_len + '-' * (bar_len - filled_len)
 
+    trailing_spaces = 24 * " "
     # Print the progress bar
-    print('[%s] %s%s -- %s%s\r' % (bar, percents, '%', suffix, " " * 24), end='')
+    print(f"[{bar_graphics}] {percents}% -- {suffix}{trailing_spaces}", end="")
 
     # If the progress is finished, print a newline.
     if count == total:
