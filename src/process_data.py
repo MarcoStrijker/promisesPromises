@@ -68,14 +68,14 @@ class Program:
         """
         # Return text if it has already been extracted
         if self.text is not None:
-            return None
+            return
 
         # Retrieve text from file if it exists
         path = os.path.join(processed_text_path, self.reference("txt"))
         if os.path.exists(path) and not FORCE_REPROCESSING:
-            with open(path, "r") as f:
+            with open(path, "r", encoding='utf-8') as f:
                 self.text = f.read()
-            return None
+            return
 
         # Extract text from pdf
         # TODO: Some manifests have repeating slogans all over their manifest, this should be removed
@@ -96,7 +96,7 @@ class Program:
 
         # Return doc if it has already been created
         if self.doc is not None:
-            return None
+            return
 
         # Compute path to file
         path = os.path.join(processed_doc_path, self.reference("doc"))
@@ -104,7 +104,7 @@ class Program:
         # Retrieve doc from file if it exists on the disk
         if os.path.exists(path) and not FORCE_REPROCESSING:
             self.doc = Doc(nlp.vocab).from_disk(path)
-            return None
+            return
 
         # Create doc from text
         self.doc = nlp(self.text)
@@ -151,10 +151,10 @@ class PathInfoExtractor:
         Returns:
             str -- The election type.
         """
-        
+
         # Split the path on the os separator
         split_path = path.split(os.sep)
-        
+
         # Since the election type is always directly after the "manifests" folder, we can find the election type
         # by finding the index of the "manifests" folder and adding 1 to it
         election_type_index = split_path.index("manifests") + 1
@@ -176,12 +176,12 @@ class PathInfoExtractor:
         """
         # Remove the .pdf extension
         path = path.removesuffix(".pdf")
-        
+
         # Split the path on the os separator
         split_path = path.split(os.sep)
-        
+
         return {"election_type": split_path[-3], "election_date": split_path[-2], "party": split_path[-1]}
-    
+
     # Reference to the methods to extract the information from the path for each election type
     EXTRACTOR_REFERENCE = {"TK": extractor_type_date_party}
 
@@ -197,7 +197,7 @@ def identify_programs(target: str) -> list[Program]:
         list[Program] -- A list of programs.
     """
     found_programs = []
-    for root, dirs, files in os.walk(target):
+    for root, _, files in os.walk(target):
         for file in files:
 
             # Manifest are only pdf files
