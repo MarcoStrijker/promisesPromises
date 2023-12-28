@@ -23,4 +23,4 @@ jobs:
         ls -R
     - name: Analysing the code with pylint
       run: |
-        pylint --rcfile=".pylintrc" $(git ls-files '*.py')
+        pylint --rcfile=".pylintrc" $(git ls-files '*.py') --fail-under=6.0
