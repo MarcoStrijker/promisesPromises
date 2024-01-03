@@ -19,12 +19,13 @@ The programs are stored in a list of Program objects. The Program object contain
 
 import os
 import re
+from collections import Counter
 from dataclasses import dataclass
 
 import spacy
 from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
 
-from pdfminer.high_level import extract_text as extract_text_pdf
+from pypdf import PdfReader
 from spacy.tokens import Doc
 
 from src import utils
@@ -78,9 +79,9 @@ class Program:
             return
 
         # Extract text from pdf
-        # TODO: Some manifests have repeating slogans all over their manifest, this should be removed
         text = extract_text_pdf(self.path)
-        text = clean_text(text)
+        text = remove_repeating_slogans(text)
+        text = clean_pdf_text(text)
 
         self.text = text
 
@@ -186,6 +187,23 @@ class PathInfoExtractor:
     EXTRACTOR_REFERENCE = {"TK": extractor_type_date_party}
 
 
+def extract_text_pdf(path: str) -> str:
+    """Extract the text from a pdf file using pypdf
+
+    Arguments:
+        path {str} -- The path to the pdf file.
+
+    Returns:
+        str -- The text from the pdf file.
+    """
+    reader = PdfReader(path)
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text() + "\n"
+
+    return text
+
+
 def identify_programs(target: str) -> list[Program]:
     """Walk through the directory and identify all pdf files for the programs of each party and
     election
@@ -228,7 +246,7 @@ def identify_programs(target: str) -> list[Program]:
     return found_programs
 
 
-def clean_text(string: str) -> str:
+def clean_pdf_text(string: str) -> str:
     """Clean the text by removing special characters and newlines.
 
     See compiled regex patterns at definition for more information.
@@ -253,7 +271,73 @@ def clean_text(string: str) -> str:
     string = SINGLE_CHAR.sub(" ", string)
     string = DOUBLE_SPACE.sub(" ", string)
 
-    return string
+    return string.strip()
+
+
+def remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
+    """Removes repeating slogans from a text. A slogan is a sequence of words that occurs multiple times in the text
+    which are not valuable for the analysis. This functions starts with a large snippet size and decreases it until the
+    optimal snippet size is found. It checks if the most common snippet occurs often enough to be considered a slogan.
+    If it does, it removes all occurrences of it and recursively calls itself to check if there are more slogans.
+
+    Args:
+        text {str} -- The text from which the slogans should be removed.
+
+    Keyword Arguments:
+        start_size {int} -- The size of the first snippet. Used to do efficient recursion. (default: {None})
+
+    Returns:
+        str -- The text without slogans.
+
+    """
+
+    # Define parameters, these are the parameters that can be tweaked to change the behavior of this function.
+    characters_per_page = 2200
+    end_snippet_size = 34
+    max_snippet_size = 200
+    slogan_occurrence = 0.95
+
+    # If the text is shorter than a page, identification of slogans is not possible.
+    if len(text) < characters_per_page:
+        return text
+
+    # When functions is not called recursively, start_size is None. In that case, set it to the maximum snippet size.
+    if not start_size:
+        start_size = max_snippet_size
+
+    # Calculate the number of pages in the text and the number of occurrences of the slogan for
+    # it to be considered a slogan.
+    pages = len(text) / characters_per_page
+    occurrences_for_slogan = pages * slogan_occurrence
+
+    # Loop over all possible snippet sizes until optimal size is found.
+    for snippet_size in range(start_size, end_snippet_size - 1, -1):
+        # Snippets are all the substrings of the text with length snippet_size.
+        # So first we get the first snippet_size characters, then it moves one character to the right and gets the next
+        # snippet_size characters, etc.
+        snippets = [text[i:i + snippet_size] for i in range(0, len(text) - snippet_size)]
+
+        # Count the number of occurrences of each snippet and get the two most common snippets.
+        two_most_common = Counter(snippets).most_common(2)
+
+        # When the two most common snippets occur equally often, optimal snippet size is not found yet.
+        if two_most_common[0][1] == two_most_common[1][1]:
+            continue
+
+        # If the most common snippet does not occur often enough, continue with the next snippet size.
+        if occurrences_for_slogan > two_most_common[0][1]:
+            continue
+
+        # If the most common snippet occurs often enough, remove all occurrences of it.
+        # TODO: improve replacement to prevent removing sentence structure. e.g.:
+        # TODO: "This is a repeating slogan. " instead of ". This is a repeating slogan. "
+        text = text.replace(two_most_common[0][0], '')
+        print(f"Removed {two_most_common[0][0]}")  # TODO: remove this print statement.
+
+        # Recursively call this function to check if there are more slogans.
+        text = remove_repeating_slogans(text, snippet_size - 1)
+
+    return text
 
 
 def process_all_programs() -> None:
