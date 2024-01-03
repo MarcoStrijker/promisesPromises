@@ -24,7 +24,7 @@ from dataclasses import dataclass
 import spacy
 from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
 
-from pdfminer.high_level import extract_text as extract_text_pdf
+from pypdf import PdfReader
 from spacy.tokens import Doc
 
 from src import utils
@@ -80,7 +80,7 @@ class Program:
         # Extract text from pdf
         # TODO: Some manifests have repeating slogans all over their manifest, this should be removed
         text = extract_text_pdf(self.path)
-        text = clean_text(text)
+        text = clean_pdf_text(text)
 
         self.text = text
 
@@ -186,6 +186,23 @@ class PathInfoExtractor:
     EXTRACTOR_REFERENCE = {"TK": extractor_type_date_party}
 
 
+def extract_text_pdf(path: str) -> str:
+    """Extract the text from a pdf file using pypdf
+
+    Arguments:
+        path {str} -- The path to the pdf file.
+
+    Returns:
+        str -- The text from the pdf file.
+    """
+    reader = PdfReader(path)
+    text = ""
+    for page in reader.pages:
+        text += page.extract_text() + "\n"
+
+    return text
+
+
 def identify_programs(target: str) -> list[Program]:
     """Walk through the directory and identify all pdf files for the programs of each party and
     election
@@ -228,7 +245,7 @@ def identify_programs(target: str) -> list[Program]:
     return found_programs
 
 
-def clean_text(string: str) -> str:
+def clean_pdf_text(string: str) -> str:
     """Clean the text by removing special characters and newlines.
 
     See compiled regex patterns at definition for more information.
@@ -253,7 +270,7 @@ def clean_text(string: str) -> str:
     string = SINGLE_CHAR.sub(" ", string)
     string = DOUBLE_SPACE.sub(" ", string)
 
-    return string
+    return string.strip()
 
 
 def process_all_programs() -> None:
