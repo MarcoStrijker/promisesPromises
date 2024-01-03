@@ -10,7 +10,7 @@ def flesch_douma_index(doc: Doc) -> float:  # noqa: C901
     Calculates the Flesch-Douma index for a given text.
 
     Formula:
-        Flesch-Douma = 206.835 - (1.015 x gemiddelde zinslengte) - (84.6 x gemiddelde woordlengte)
+        Flesch-Douma = 206.835 - (1.015 x gemiddelde zinslengte) - (84.6 x gemiddelde aantal lettergrepen per woord)
 
     Args:
         doc {Doc} -- The spacy doc for which the Flesch-Douma index should be calculated.
