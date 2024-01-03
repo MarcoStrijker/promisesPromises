@@ -46,7 +46,7 @@ def progress(count: int, total: int, suffix: str = None):
 
     trailing_spaces = 24 * " "
     # Print the progress bar
-    print(f"[{bar_graphics}] {percents}% -- {suffix}{trailing_spaces}", end="")
+    print(f"[{bar_graphics}] {percents}% -- {suffix}{trailing_spaces}\r", end="")
 
     # If the progress is finished, print a newline.
     if count == total:
