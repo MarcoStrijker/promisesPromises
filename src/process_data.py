@@ -99,7 +99,7 @@ class Program:
             return
 
         # Compute path to file
-        path = os.path.join(processed_doc_path, self.reference("doc"))
+        path = os.path.join(processed_doc_path, self.reference("spacy"))
 
         # Retrieve doc from file if it exists on the disk
         if os.path.exists(path) and not FORCE_REPROCESSING:
