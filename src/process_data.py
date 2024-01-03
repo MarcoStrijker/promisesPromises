@@ -246,8 +246,8 @@ def clean_text(string: str) -> str:
     string = SPECIAL_CHAR.sub(" ", string)
     string = PAGE_NUM.sub(" ", string)
     string = NEWLINE.sub(" ", string)
-    string = TAB.sub(r"\. ", string)
-    string = DOUBLE_DOT.sub(r"\. ", string)
+    string = TAB.sub(". ", string)
+    string = DOUBLE_DOT.sub(". ", string)
     string = FORM_FEED.sub(" ", string)
     string = LARGE_NUMBERS.sub(" ", string)
     string = SINGLE_CHAR.sub(" ", string)
@@ -305,15 +305,15 @@ FORCE_REPROCESSING = False
 # Matches special characters
 SPECIAL_CHAR = re.compile(r'[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]')
 # Matches newlines inbetween words
-NEWLINE = re.compile(r"(?<=\w)\n+(?=\w)")
+NEWLINE = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
 # Matches multiple spaces
 DOUBLE_SPACE = re.compile(r"\s+")
-# Matches multiple dots, whitespace is allowed between the dots
-DOUBLE_DOT = re.compile(r"\s*\.\s*\.\s*")
+# Matches multiple dots, whitespace is allowed between and around the dots
+DOUBLE_DOT = re.compile(r"(\s*\.\s*)+")
 # Matches tabs
 TAB = re.compile(r"\t")
 # Matches page numbers, which is a number surrounded by newlines and possibly spaces on either side
-PAGE_NUM = re.compile(r"\n?\s*\d+\s*\n?")
+PAGE_NUM = re.compile(r"\n+\s*\d+\s*\n+")
 # Matches large numbers, which is a number with potentially spaces between these numbers
 # Only matches when digits, spaces and new lines that are 9 characters or longer
 LARGE_NUMBERS = re.compile(r"[\d\s\n]{9,}")
