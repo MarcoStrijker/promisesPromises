@@ -260,9 +260,9 @@ def clean_pdf_text(string: str) -> str:
         str -- The cleaned text.
     """
 
-    string = HYPHENATION.sub("", string)
     string = SPECIAL_CHAR.sub(" ", string)
     string = PAGE_NUM.sub(" ", string)
+    string = HYPHENATION.sub("", string)
     string = NEWLINE.sub(" ", string)
     string = TAB.sub(". ", string)
     string = DOUBLE_DOT.sub(". ", string)
@@ -406,7 +406,7 @@ FORM_FEED = re.compile(r"\f")
 # When hyphenation occurs, one word is split in two and a hyphen is added at
 # the end of the first part, however, when extracting the text from the pdf,
 # the hyphen should be removed and the two parts should be joined together.
-HYPHENATION = re.compile(r"\x02|(?<=\w-)\n(?=\w+)")
+HYPHENATION = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
 # Matches single characters
 SINGLE_CHAR = re.compile(r"(?<=\s)\w(?=\s|$)")
 SINGLE_CHAR_START = re.compile(r"^\w\s")
