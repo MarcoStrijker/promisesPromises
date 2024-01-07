@@ -264,7 +264,7 @@ def clean_pdf_text(string: str) -> str:
     string = PAGE_NUM.sub(" ", string)
     string = HYPHENATION.sub("", string)
     string = NEWLINE.sub(" ", string)
-    string = TAB.sub(". ", string)
+    string = TAB.sub(" ", string)
     string = DOUBLE_DOT.sub(". ", string)
     string = FORM_FEED.sub(" ", string)
     string = LARGE_NUMBERS.sub(" ", string)
