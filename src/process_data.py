@@ -373,7 +373,7 @@ def get_programs() -> list[Program]:
     Returns:
         list[Program] -- A list of programs.
     """
-    if programs_processed:
+    if not programs_processed:
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
                            " before calling this function.")
 
