@@ -58,7 +58,7 @@ class Program:
             ext {str} -- The extension of the file.
         """
         # TODO: make more flexible for different election formats
-        filename = f"{self.election_type} - {self.party} - {self.election_date}"
+        filename = f"{self.election_type}-{self.party}-{self.election_date}"
 
         # Add tags to filename, shorten tags to 3 characters
         # Also, prevent spaces in tags
