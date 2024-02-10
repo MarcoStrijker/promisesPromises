@@ -39,19 +39,3 @@ data
 │   │   ├── 2017-03
 │   │   │   ├── CDA.pdf
 ```
-
-#### Tags
-Some parties have only concept versions of their manifestos, or do not have selectable text. Add this information to the file by adding '#Concept' to the filename. Multiple tags can be added by separating them with a space.
-This looks like this:
-```
-data
-├── manifests
-│   ├── TK
-│   │   ├── 2017-03
-│   │   │   ├── CDA #Concept #NotSelectable.pdf
-```
-
-Currently, the following tags are supported:
-- Concept
-- NotSelectable
-- Untrimmed
