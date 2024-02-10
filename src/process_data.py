@@ -20,7 +20,8 @@ The programs are stored in a list of Program objects. The Program object contain
 import os
 import re
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from typing import Callable
 
 import spacy
 from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
@@ -46,8 +47,8 @@ class Program:
     election_date: str
     path: str
 
-    text: str = None
-    doc: Doc = None
+    text: str | None = field(default=None, init=False)
+    doc: Doc | None = field(default=None, init=False)
 
     def reference(self, ext: str) -> str:
         """Return a reference to the file, including the party and election.
@@ -80,7 +81,7 @@ class Program:
 
         # Extract text from pdf
         text = extract_text_pdf(self.path)
-        text = remove_repeating_slogans(text)
+        text = _remove_repeating_slogans(text)
         text = clean_pdf_text(text)
 
         self.text = text
@@ -98,6 +99,10 @@ class Program:
         # Return doc if it has already been created
         if self.doc is not None:
             return
+
+        # Check if there is text to create a doc from
+        if self.text is None:
+            raise ValueError("No text to create a doc from. Call retrieve_text_from_pdf() first to retrieve the text.")
 
         # Compute path to file
         path = os.path.join(processed_doc_path, self.reference("spacy"))
@@ -123,17 +128,17 @@ class PathInfoExtractor:
     When identifying programs, the path to the program contains information about the program, for example,
     election type, the election or the party. This class contains methods to extract this information from the path.
 
-    When adding a new election type, the extractor should be added to the EXTRACTOR_REFERENCE dictionary and the
-    extractor should be implemented as a static method in this class. The extractor should handle the parsing of the
-    path for the specific path format. The reference in EXTRACTOR_REFERENCE is to automatically call the correct
-    extractor for the election type.
-
     For example, if the path is .../TK/2017/VVD.pdf, the election type is TK, the election date is 2017 and the party
     is VVD. The election type is always directly after the "manifests" folder in the path. In this specific example,
     the election date is always the second to last folder in the path and the party is always the file name without
     the .pdf extension. So, the output of the extractor should be like this:
 
     {"election_type": "TK", "election_date": "2017", "party": "VVD"}
+
+    When adding a new election type, the extractor should be added to the EXTRACTOR_REFERENCE dictionary and the
+    extractor should be implemented as a static method in this class. The extractor should handle the parsing of the
+    path for the specific path format. The reference in EXTRACTOR_REFERENCE is to automatically call the correct
+    extractor for the election type.
 
     """
 
@@ -163,7 +168,7 @@ class PathInfoExtractor:
         return split_path[election_type_index]
 
     @staticmethod
-    def extractor_type_date_party(path: str) -> dict[str]:
+    def extractor_type_date_party(path: str) -> dict[str, str]:
         """Extract the election type, election date and party from the path.
 
         The path should be in the following format:
@@ -184,7 +189,9 @@ class PathInfoExtractor:
         return {"election_type": split_path[-3], "election_date": split_path[-2], "party": split_path[-1]}
 
     # Reference to the methods to extract the information from the path for each election type
-    EXTRACTOR_REFERENCE = {"TK": extractor_type_date_party}
+    EXTRACTOR_REFERENCE: dict[str, Callable[[str], dict[str, str]]] = {
+        "TK": extractor_type_date_party
+    }
 
 
 def extract_text_pdf(path: str) -> str:
@@ -274,7 +281,7 @@ def clean_pdf_text(string: str) -> str:
     return string.strip()
 
 
-def remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
+def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
     """Removes repeating slogans from a text. A slogan is a sequence of words that occurs multiple times in the text
     which are not valuable for the analysis. This functions starts with a large snippet size and decreases it until the
     optimal snippet size is found. It checks if the most common snippet occurs often enough to be considered a slogan.
@@ -332,10 +339,9 @@ def remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
         # TODO: improve replacement to prevent removing sentence structure. e.g.:
         # TODO: "This is a repeating slogan. " instead of ". This is a repeating slogan. "
         text = text.replace(two_most_common[0][0], '')
-        print(f"Removed {two_most_common[0][0]}")  # TODO: remove this print statement.
 
         # Recursively call this function to check if there are more slogans.
-        text = remove_repeating_slogans(text, snippet_size - 1)
+        text = _remove_repeating_slogans(text, snippet_size - 1)
 
     return text
 
@@ -364,7 +370,7 @@ def process_all_programs() -> None:
     print("All programs processed, ready for analysis")
 
 
-def get_programs() -> list[Program]:
+def get_all_programs() -> list[Program]:
     """Return all programs. If the programs have not been processed yet, an exception will be raised.
 
     Raises:
@@ -378,6 +384,91 @@ def get_programs() -> list[Program]:
                            " before calling this function.")
 
     return _programs
+
+
+def get_programs(*, election_type: str | None = None, party: str | None = None,
+                 election_date: str | None = None) -> list[Program]:
+    """Return a list of programs based on the election type, party and election date. If no parameters are given,
+    all programs will be returned. If the programs have not been processed yet, or no programs are found, an exception
+    will be raised.
+
+    Keyword Arguments:
+        election_type {str} -- The type of the election. (default: {None})
+        party {str} -- The party of the program. (default: {None})
+        election_date {str} -- The date of the election. (default: {None})
+
+    Returns:
+        list[Program] -- A list of programs.
+
+    Raises:
+        RuntimeError: If the programs have not been processed yet.
+        ValueError: If no program is found.
+    """
+
+    # Validate parameters
+    assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
+    assert isinstance(party, str) or party is None, "Party must be a string or None."
+    assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+
+    # Raise if programs have not been processed yet
+    if not programs_processed:
+        raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
+                           " before calling this function.")
+
+    # Return all programs if no parameters are given
+    if election_type is None and party is None and election_date is None:
+        return _programs
+
+    # Loop over all programs and find the programs that match the given parameters
+    found_programs = [p for p in _programs
+                      if (election_type is None or p.election_type == election_type)
+                      and (party is None or p.party == party)
+                      and (election_date is None or p.election_date == election_date)]
+
+    # Return found programs if any are found
+    if found_programs:
+        return found_programs
+
+    # Raise if no program is found
+    raise ValueError(f"No program found for election type: {election_type},"
+                     f" party: {party}, election date: {election_date}")
+
+
+def get_specific_program(*, election_type: str, party: str, election_date: str) -> Program:
+    """Return a program by election type, party and election date. If no program is found, or the programs have not
+    been processed yet, an exception will be raised.
+
+    Arguments:
+        election_type {str} -- The type of the election.
+        party {str} -- The party of the program.
+        election_date {str} -- The date of the election.
+
+    Returns:
+        Program -- The program.
+
+    Raises:
+        ValueError: If no program is found.
+        RuntimeError: If the programs have not been processed yet.
+    """
+
+    # Validate parameters
+    assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
+    assert isinstance(party, str) or party is None, "Party must be a string or None."
+    assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+
+    if not programs_processed:
+        raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
+                           " before calling this function.")
+
+    properties = (election_type, party, election_date)
+
+    # Find program
+    for p in _programs:
+        if (p.election_type, p.party, p.election_date) == properties:
+            return p
+
+    raise ValueError(f"No program found for election type: {election_type},"
+                     f" party: {party}, election date: {election_date}")
 
 
 # For debugging purposes, set to true to force (re)processing of all programs
