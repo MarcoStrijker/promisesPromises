@@ -45,6 +45,7 @@ class Program:
     election_type: str
     party: str
     election_date: str
+    tags: list[str]
     path: str
 
     text: str | None = field(default=None, init=False)
@@ -57,16 +58,23 @@ class Program:
             ext {str} -- The extension of the file.
         """
         # TODO: make more flexible for different election formats
+        filename = f"{self.election_type} - {self.party} - {self.election_date}"
 
-        return f"{self.election_type} - {self.party} - {self.election_date}.{ext}"
+        # Add tags to filename, shorten tags to 3 characters
+        # Also, prevent spaces in tags
+        for tag in self.tags:
+            filename += f"#{tag[:3]}"
+
+        return f"{filename}.{ext}"
 
     def retrieve_text_from_pdf(self) -> None:
         """Retrieve the text from the pdf file. If the text has already been extracted,
         it will be retrieved from the file. Adds the text to the program object and
         saves it to a file.
 
-        Returns:
-            str -- The text of the program.
+        Changes:
+            self.text: str -- The text of the program.
+
         """
         # Return text if it has already been extracted
         if self.text is not None:
@@ -91,9 +99,11 @@ class Program:
             f.write(text)
 
     def create_doc_from_text(self) -> None:
-        """Convert the text to a spacy doc. If the doc has already been created,
-        it will be retrieved from the file. Adds the doc to the program object and
-        saves it to a file.
+        """Convert the text to a spacy doc. If the doc has already been created, it will be
+        retrieved from the file. Adds the doc to the program object and saves it to a file.
+
+        Changes:
+            self.doc: Doc -- The spacy doc of the program.
         """
 
         # Return doc if it has already been created
@@ -119,7 +129,13 @@ class Program:
         self.doc.to_disk(path)
 
     def __repr__(self):
-        return f"{self.party} - {self.election_type} - {self.election_date}"
+        """Return a string representation of the program."""
+        name = f"{self.election_type} - {self.party} - {self.election_date}"
+
+        for tag in self.tags:
+            name += f" #{tag}"
+
+        return name
 
 
 class PathInfoExtractor:
@@ -141,6 +157,8 @@ class PathInfoExtractor:
     extractor for the election type.
 
     """
+
+    EXTRACTOR_REFERENCE: dict[str, Callable[[str], dict[str, str]]]
 
     @staticmethod
     def get_election_type(path: str) -> str:
@@ -168,7 +186,34 @@ class PathInfoExtractor:
         return split_path[election_type_index]
 
     @staticmethod
-    def extractor_type_date_party(path: str) -> dict[str, str]:
+    def extract_tags_and_remove_tags_from_filename(filename: str) -> tuple[str, list[str]]:
+        """Extract the tags from the filename.
+
+        The tags are the words in the filename that are lead by a hashtag. These
+        tags are used to indicate the issues of the program, for example if the program
+        doesn't have selectable text or the program is a concept version.
+
+        Arguments:
+            filename {str} -- The path to the program.
+
+        Returns:
+            tuple[str, list[str]] -- The filename without the tags and the tags.
+        """
+        # If there are no hashtags in the filename, return the filename and an empty list
+        if "#" not in filename:
+            return filename, []
+
+        # Fetch the tags from the filename, and remove the hashtags
+        # The tags are the words in the filename that are lead by a hashtag
+        tags = [tag.removeprefix("#") for tag in re.findall(r"#\w+", filename)]
+
+        # Remove the hashtags from the filename
+        filename = re.sub(r"\s*#\w+\s*", "", filename)
+
+        return filename, tags
+
+    @staticmethod
+    def extractor_type_date_party_tags(path: str) -> dict[str, str]:
         """Extract the election type, election date and party from the path.
 
         The path should be in the following format:
@@ -186,11 +231,19 @@ class PathInfoExtractor:
         # Split the path on the os separator
         split_path = path.split(os.sep)
 
-        return {"election_type": split_path[-3], "election_date": split_path[-2], "party": split_path[-1]}
+        # Get info from the path
+        filename = split_path[-1]
+        election_date = split_path[-2]
+        election_type = split_path[-3]
+
+        # Extract the tags from the filename
+        filename, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(filename)
+
+        return {"election_type": election_type, "election_date": election_date, "party": filename, "tags": tags}
 
     # Reference to the methods to extract the information from the path for each election type
-    EXTRACTOR_REFERENCE: dict[str, Callable[[str], dict[str, str]]] = {
-        "TK": extractor_type_date_party
+    EXTRACTOR_REFERENCE = {
+        "TK": extractor_type_date_party_tags
     }
 
 
@@ -387,8 +440,8 @@ def get_all_programs() -> list[Program]:
 
 
 def get_programs(*, election_type: str | None = None, party: str | None = None,
-                 election_date: str | None = None) -> list[Program]:
-    """Return a list of programs based on the election type, party and election date. If no parameters are given,
+                 election_date: str | None = None, tags: list[str] | None = None) -> list[Program]:
+    """Return a list of programs based on the election type, party, election date and tags. If no parameters are given,
     all programs will be returned. If the programs have not been processed yet, or no programs are found, an exception
     will be raised.
 
@@ -396,6 +449,7 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
         election_type {str} -- The type of the election. (default: {None})
         party {str} -- The party of the program. (default: {None})
         election_date {str} -- The date of the election. (default: {None})
+        tags {list[str]} -- The tags of the program. (default: {None})
 
     Returns:
         list[Program] -- A list of programs.
@@ -409,6 +463,7 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
     assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
     assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+    assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     # Raise if programs have not been processed yet
     if not programs_processed:
@@ -416,14 +471,15 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
                            " before calling this function.")
 
     # Return all programs if no parameters are given
-    if election_type is None and party is None and election_date is None:
+    if election_type is None and party is None and election_date is None and tags is None:
         return _programs
 
     # Loop over all programs and find the programs that match the given parameters
     found_programs = [p for p in _programs
                       if (election_type is None or p.election_type == election_type)
                       and (party is None or p.party == party)
-                      and (election_date is None or p.election_date == election_date)]
+                      and (election_date is None or p.election_date == election_date)
+                      and (tags is None or all(tag in p.tags for tag in tags))]
 
     # Return found programs if any are found
     if found_programs:
@@ -434,7 +490,8 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
                      f" party: {party}, election date: {election_date}")
 
 
-def get_specific_program(*, election_type: str, party: str, election_date: str) -> Program:
+def get_specific_program(*, election_type: str, party: str, election_date: str,
+                         tags: list[str] | None = None) -> Program:
     """Return a program by election type, party and election date. If no program is found, or the programs have not
     been processed yet, an exception will be raised.
 
@@ -442,6 +499,9 @@ def get_specific_program(*, election_type: str, party: str, election_date: str) 
         election_type {str} -- The type of the election.
         party {str} -- The party of the program.
         election_date {str} -- The date of the election.
+
+    Keyword Arguments:
+        tags {list[str]} -- The tags of the program. (default: {None})
 
     Returns:
         Program -- The program.
@@ -455,6 +515,7 @@ def get_specific_program(*, election_type: str, party: str, election_date: str) 
     assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
     assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+    assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     if not programs_processed:
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
@@ -464,8 +525,16 @@ def get_specific_program(*, election_type: str, party: str, election_date: str) 
 
     # Find program
     for p in _programs:
-        if (p.election_type, p.party, p.election_date) == properties:
-            return p
+        # Check if program matches properties
+        if (p.election_type, p.party, p.election_date) != properties:
+            continue
+
+        # Check if program has all tags
+        if tags is not None and not all(tag in p.tags for tag in tags):
+            continue
+
+        # Return found program
+        return p
 
     raise ValueError(f"No program found for election type: {election_type},"
                      f" party: {party}, election date: {election_date}")
