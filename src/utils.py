@@ -1,4 +1,13 @@
-def progress(count: int, total: int, suffix: str = None):
+"""
+Utility functions that are used in the project.
+
+Functions:
+  - progress: Prints a progress bar to the console.
+
+"""
+
+
+def progress(count: int, total: int, suffix: object | str | None = None):
     """
     Prints a progress bar to the console. Pycharm does not support this out of the box, so
     set emulate terminal in output console to true in the run configuration.
