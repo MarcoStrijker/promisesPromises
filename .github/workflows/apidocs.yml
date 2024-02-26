@@ -9,9 +9,9 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Set up Python 3.8
-      uses: actions/setup-python@v2
+      uses: actions/setup-python@v5
       with:
-        python-version: 3.8
+        python-version: 3.11
 
     - name: Install requirements for documentation generation
       run: |
@@ -20,6 +20,5 @@ jobs:
 
     - name: Generate API documentation with pydoctor
       run: |
-
         # Run pydoctor build
-        echo $(pwd)
+        pydoctor --project-name=promisesPromises --project-url=https://github.com/MarcoStrijker/promisesPromises --make-html --html-output=docs --project-base-dir="." --docformat=google src/process_data.py src/utils.py
