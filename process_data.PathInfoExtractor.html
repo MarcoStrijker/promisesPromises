@@ -1,0 +1,788 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>process_data.PathInfoExtractor</title>
+    <meta name="generator" content="pydoctor 23.9.1"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a> <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="search-help-button" title="Help" onclick="toggleSearchHelpText()"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div class="hint" id="search-help-box">
+          <p class="rst-last">
+      
+            Search bar offers the following options:
+            <ul>   
+                <li>
+                  <strong>Term presence.</strong> The below example searches for documents that 
+                    must contain “foo”, might contain “bar” and must not contain “baz”: <code>+foo bar -baz</code>
+                </li> 
+
+                <li>
+                  <strong>Wildcards.</strong> The below example searches for documents with words beginning with “foo”: <code>foo*</code>
+                </li> 
+
+                <li>
+                  <strong>Search in specific fields.</strong> The following search matches all objects 
+                  in "twisted.mail" that matches “search”: <code>+qname:twisted.mail.* +search</code>
+
+                  <p>
+                    Possible fields: 'name', 'qname' (fully qualified name), 'docstring', and 'kind'.
+                    Last two fields are only applicable if "search in docstrings" is enabled.
+                  </p>
+                </li>
+
+                <li>
+                  <strong>Fuzzy matches.</strong> The following search matches all documents 
+                  that have a word within 1 edit distance of “foo”: <code>foo~1</code>
+                </li>
+            </ul>
+
+          </p>
+        </div>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 8px;">
+          <p>Results provided by <a href="https://lunrjs.com">Lunr.js</a></p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="process_data.PathInfoExtractor.html" class="internal-link" title="This class"><wbr></wbr>Path<wbr></wbr>Info<wbr></wbr>Extractor</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#extract_tags_and_remove_tags_from_filename" class="internal-link" title="process_data.PathInfoExtractor.extract_tags_and_remove_tags_from_filename">extract<wbr></wbr>_tags<wbr></wbr>_and<wbr></wbr>_remove<wbr></wbr>_tags<wbr></wbr>_from<wbr></wbr>_filename</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#extractor_type_date_party_tags" class="internal-link" title="process_data.PathInfoExtractor.extractor_type_date_party_tags">extractor<wbr></wbr>_type<wbr></wbr>_date<wbr></wbr>_party<wbr></wbr>_tags</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_election_type" class="internal-link" title="process_data.PathInfoExtractor.get_election_type">get<wbr></wbr>_election<wbr></wbr>_type</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#EXTRACTOR_REFERENCE" class="internal-link" title="process_data.PathInfoExtractor.EXTRACTOR_REFERENCE">EXTRACTOR<wbr></wbr>_REFERENCE</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="process_data.html" class="internal-link" title="The parent of this class">process<wbr></wbr>_data</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.PathInfoExtractor.html" class="internal-link" title="process_data.PathInfoExtractor"><wbr></wbr>Path<wbr></wbr>Info<wbr></wbr>Extractor</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.Program.html" class="internal-link" title="process_data.Program"><wbr></wbr>Program</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#clean_pdf_text" class="internal-link" title="process_data.clean_pdf_text">clean<wbr></wbr>_pdf<wbr></wbr>_text</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#extract_text_pdf" class="internal-link" title="process_data.extract_text_pdf">extract<wbr></wbr>_text<wbr></wbr>_pdf</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#get_all_programs" class="internal-link" title="process_data.get_all_programs">get<wbr></wbr>_all<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#get_programs" class="internal-link" title="process_data.get_programs">get<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#get_specific_program" class="internal-link" title="process_data.get_specific_program">get<wbr></wbr>_specific<wbr></wbr>_program</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#identify_programs" class="internal-link" title="process_data.identify_programs">identify<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#process_all_programs" class="internal-link" title="process_data.process_all_programs">process<wbr></wbr>_all<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_remove_repeating_slogans" class="internal-link" title="process_data._remove_repeating_slogans">_remove<wbr></wbr>_repeating<wbr></wbr>_slogans</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#DOUBLE_DOT" class="internal-link" title="process_data.DOUBLE_DOT">DOUBLE<wbr></wbr>_DOT</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#DOUBLE_SPACE" class="internal-link" title="process_data.DOUBLE_SPACE">DOUBLE<wbr></wbr>_SPACE</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#FORCE_REPROCESSING" class="internal-link" title="process_data.FORCE_REPROCESSING">FORCE<wbr></wbr>_REPROCESSING</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#FORM_FEED" class="internal-link" title="process_data.FORM_FEED">FORM<wbr></wbr>_FEED</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#HYPHENATION" class="internal-link" title="process_data.HYPHENATION">HYPHENATION</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#LARGE_NUMBERS" class="internal-link" title="process_data.LARGE_NUMBERS">LARGE<wbr></wbr>_NUMBERS</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#NEWLINE" class="internal-link" title="process_data.NEWLINE">NEWLINE</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#PAGE_NUM" class="internal-link" title="process_data.PAGE_NUM">PAGE<wbr></wbr>_NUM</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#SINGLE_CHAR" class="internal-link" title="process_data.SINGLE_CHAR">SINGLE<wbr></wbr>_CHAR</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#SINGLE_CHAR_START" class="internal-link" title="process_data.SINGLE_CHAR_START">SINGLE<wbr></wbr>_CHAR<wbr></wbr>_START</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#SPECIAL_CHAR" class="internal-link" title="process_data.SPECIAL_CHAR">SPECIAL<wbr></wbr>_CHAR</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#TAB" class="internal-link" title="process_data.TAB">TAB</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#nlp" class="internal-link" title="process_data.nlp">nlp</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_data_path" class="internal-link" title="process_data._data_path">_data<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_directory" class="internal-link" title="process_data._directory">_directory</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_manifest_path" class="internal-link" title="process_data._manifest_path">_manifest<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_processed_doc_path" class="internal-link" title="process_data._processed_doc_path">_processed<wbr></wbr>_doc<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_processed_path" class="internal-link" title="process_data._processed_path">_processed<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_processed_text_path" class="internal-link" title="process_data._processed_text_path">_processed<wbr></wbr>_text<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_programs" class="internal-link" title="process_data._programs">_programs</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_programs_processed" class="internal-link" title="process_data._programs_processed">_programs<wbr></wbr>_processed</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_project_root" class="internal-link" title="process_data._project_root">_project<wbr></wbr>_root</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="process_data.html" class="internal-link">process_data</a></code><wbr></wbr>.<code><a href="process_data.PathInfoExtractor.html" class="internal-link" title="process_data.PathInfoExtractor">PathInfoExtractor</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">PathInfoExtractor</span>:</code></p>
+          <p><a href="classIndex.html#process_data.PathInfoExtractor">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>A class containing methods to extract information from a manifest path.</p>
+<p>When identifying programs, the path to the program contains information about the program, for example,
+election type, the election or the party. This class contains methods to extract this information from the path.</p>
+<p>For example, if the path is <code>.../TK/2017/VVD.pdf</code>, the election type is TK, the election date is 2017 and the party
+is VVD. The election type is always directly after the "manifests" folder in the path. In this specific example,
+the election date is always the second to last folder in the path and the party is always the file name without
+the .pdf extension. So, the output of the extractor should be like this.</p>
+<div class="rst-admonition rst-admonition-example">
+<p class="rst-first rst-admonition-title">Example</p>
+<p class="rst-last">{"election_type": "TK", "election_date": "2017", "party": "VVD"}</p>
+</div>
+<p>When adding a new election type, the extractor should be added to the EXTRACTOR_REFERENCE dictionary and the
+extractor should be implemented as a static method in this class. The extractor should handle the parsing of the
+path for the specific path format. The reference in EXTRACTOR_REFERENCE is to automatically call the correct
+extractor for the election type.</p>
+</div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id3">
+  
+  
+  <tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#extract_tags_and_remove_tags_from_filename" class="internal-link" title="process_data.PathInfoExtractor.extract_tags_and_remove_tags_from_filename">extract<wbr></wbr>_tags<wbr></wbr>_and<wbr></wbr>_remove<wbr></wbr>_tags<wbr></wbr>_from<wbr></wbr>_filename</a></code></td>
+    <td>Extract the tags from the filename.</td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#extractor_type_date_party_tags" class="internal-link" title="process_data.PathInfoExtractor.extractor_type_date_party_tags">extractor<wbr></wbr>_type<wbr></wbr>_date<wbr></wbr>_party<wbr></wbr>_tags</a></code></td>
+    <td>Extract the election type, election date and party from the path.</td>
+  </tr><tr class="staticmethod">
+    
+    <td>Static Method</td>
+    <td><code><a href="#get_election_type" class="internal-link" title="process_data.PathInfoExtractor.get_election_type">get<wbr></wbr>_election<wbr></wbr>_type</a></code></td>
+    <td>Helper method to extract the election type from the path. The election type is always directly after the "manifests" folder in the path.</td>
+  </tr><tr class="constant">
+    
+    <td>Constant</td>
+    <td><code><a href="#EXTRACTOR_REFERENCE" class="internal-link" title="process_data.PathInfoExtractor.EXTRACTOR_REFERENCE">EXTRACTOR<wbr></wbr>_REFERENCE</a></code></td>
+    <td>Reference to the methods to extract the information from the path for each election type</td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basestaticmethod">
+  
+  
+  <a name="process_data.PathInfoExtractor.extract_tags_and_remove_tags_from_filename">
+    
+  </a>
+  <a name="extract_tags_and_remove_tags_from_filename">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">extract_tags_and_remove_tags_from_filename</span><span class="function-signature">(filename: <code>str</code>) -&gt; <code>tuple[<wbr></wbr>str, <wbr></wbr>list[<wbr></wbr>str]]</code></span>:
+    
+    <a class="headerLink" href="#extract_tags_and_remove_tags_from_filename" title="process_data.PathInfoExtractor.extract_tags_and_remove_tags_from_filename">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Extract the tags from the filename.</p>
+<p>The tags are the words in the filename that are lead by a hashtag. These
+tags are used to indicate the issues of the program, for example if the program
+doesn't have selectable text or the program is a concept version.</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">filename:</span><code>str</code></td><td class="fieldArgDesc">The path to the program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>tuple[<wbr></wbr>str, <wbr></wbr>list[<wbr></wbr>str]]</code></td><td class="fieldArgDesc">tuple[str, list[str]] -- The filename without the tags and the tags.</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod">
+  
+  
+  <a name="process_data.PathInfoExtractor.extractor_type_date_party_tags">
+    
+  </a>
+  <a name="extractor_type_date_party_tags">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">extractor_type_date_party_tags</span><span class="function-signature">(path: <code>str</code>) -&gt; <code>dict[<wbr></wbr>str, <wbr></wbr>str]</code></span>:
+    
+    <a class="headerLink" href="#extractor_type_date_party_tags" title="process_data.PathInfoExtractor.extractor_type_date_party_tags">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Extract the election type, election date and party from the path.</p>
+<p>The path should be in the following format:
+.../{election_type}/{election_date}/{party}.pdf</p>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">path:</span><code>str</code></td><td class="fieldArgDesc">The path to the program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>dict[<wbr></wbr>str, <wbr></wbr>str]</code></td><td class="fieldArgDesc">The election type, election date and party.</td></tr></table></div>
+  </div>
+</div><div class="basestaticmethod">
+  
+  
+  <a name="process_data.PathInfoExtractor.get_election_type">
+    
+  </a>
+  <a name="get_election_type">
+    
+  </a>
+  <div class="functionHeader">
+    
+    @staticmethod<br />
+    <span class="py-keyword">def</span> <span class="py-defname">get_election_type</span><span class="function-signature">(path: <code>str</code>) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#get_election_type" title="process_data.PathInfoExtractor.get_election_type">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Helper method to extract the election type from the path. The election type is always directly after
+the "manifests" folder in the path.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">path:</span><code>str</code></td><td class="fieldArgDesc"></td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc">The election type.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If 'manifests' is not in the path.</td></tr><tr><td class="fieldArgContainer"><code>IndexError</code></td><td>If manifest is the last folder in the path.</td></tr></table></div>
+  </div>
+</div><div class="baseconstant">
+  
+  
+  <a name="process_data.PathInfoExtractor.EXTRACTOR_REFERENCE">
+    
+  </a>
+  <a name="EXTRACTOR_REFERENCE">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">EXTRACTOR_REFERENCE</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>Callable[<wbr></wbr>[<wbr></wbr>str], <wbr></wbr>dict[<wbr></wbr>str, <wbr></wbr>str]]]</code> =
+    
+    <a class="headerLink" href="#EXTRACTOR_REFERENCE" title="process_data.PathInfoExtractor.EXTRACTOR_REFERENCE">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>Reference to the methods to extract the information from the path for each election type</p></div>
+    <table class="valueTable"><tr class="fieldStart"><td class="fieldName">Value</td></tr><tr><td><pre class="constant-value"><code>{<wbr></wbr><span class="rst-variable-quote">'</span><span class="rst-variable-string">TK</span><span class="rst-variable-quote">'</span>: <a href="#extractor_type_date_party_tags" class="internal-link" title="process_data.PathInfoExtractor.extractor_type_date_party_tags">extractor_type_date_party_tags</a>}</code></pre></td></tr></table>
+  </div>
+</div>
+        </div>
+      
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    23.9.1 at 2024-02-26 23:08:57.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>

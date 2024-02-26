@@ -1,0 +1,1095 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "DTD/xhtml1-strict.dtd">
+<html>
+  
+
+  <head>
+    
+    <title>process_data.Program</title>
+    <meta name="generator" content="pydoctor 23.9.1"> 
+        
+    </meta>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1" />
+    <link rel="stylesheet" type="text/css" href="bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="apidocs.css" />
+    <link rel="stylesheet" type="text/css" href="extra.css" />
+</head>
+
+  <body>
+
+    
+
+    <nav class="navbar navbar-default mainnavbar">
+      
+  
+  <div class="container-fluid">
+
+
+    <div class="navbar-header">
+      
+      <div class="navlinks">
+        <span class="navbar-brand">
+          <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a> <a href="index.html">API Documentation</a>
+        </span>
+
+        <a href="moduleIndex.html">
+          Modules
+        </a>
+
+        <a href="classIndex.html">
+          Classes
+        </a>
+
+        <a href="nameIndex.html">
+          Names
+        </a>
+
+        <div id="search-box-container">
+          <div class="input-group">
+            <input id="search-box" type="search" name="search-query" placeholder="Search..." aria-label="Search" minlength="2" class="form-control" autocomplete="off" />
+            
+            <span class="input-group-btn">
+              <a style="display: none;" class="btn btn-default" id="search-clear-button" title="Clear" onclick="clearSearch()"><img src="fonts/x-circle.svg" alt="Clear" /></a>
+              <a class="btn btn-default" id="search-help-button" title="Help" onclick="toggleSearchHelpText()"><img src="fonts/info.svg" alt="Help" /></a>
+            </span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="search-results-container" style="display: none;">
+        
+        <div id="search-buttons">
+          <span class="label label-default" id="search-docstrings-button">
+          <label class="checkbox-inline">
+            <input type="checkbox" id="toggle-search-in-docstrings-checkbox" value="false" onclick="toggleSearchInDocstrings()">
+              search in docstrings
+            </input>
+          </label>
+          </span>
+          
+        </div>
+        
+        <noscript>
+            <h1>Cannot search: JavaScript is not supported/enabled in your browser.</h1>
+        </noscript>
+
+        <div class="hint" id="search-help-box">
+          <p class="rst-last">
+      
+            Search bar offers the following options:
+            <ul>   
+                <li>
+                  <strong>Term presence.</strong> The below example searches for documents that 
+                    must contain “foo”, might contain “bar” and must not contain “baz”: <code>+foo bar -baz</code>
+                </li> 
+
+                <li>
+                  <strong>Wildcards.</strong> The below example searches for documents with words beginning with “foo”: <code>foo*</code>
+                </li> 
+
+                <li>
+                  <strong>Search in specific fields.</strong> The following search matches all objects 
+                  in "twisted.mail" that matches “search”: <code>+qname:twisted.mail.* +search</code>
+
+                  <p>
+                    Possible fields: 'name', 'qname' (fully qualified name), 'docstring', and 'kind'.
+                    Last two fields are only applicable if "search in docstrings" is enabled.
+                  </p>
+                </li>
+
+                <li>
+                  <strong>Fuzzy matches.</strong> The following search matches all documents 
+                  that have a word within 1 edit distance of “foo”: <code>foo~1</code>
+                </li>
+            </ul>
+
+          </p>
+        </div>
+
+        <div id="search-status"> </div>
+
+        <div class="warning" id="search-warn-box" style="display: none;">
+          <p class="rst-last"><span id="search-warn"></span></p>
+        </div>
+
+        <table id="search-results">
+          <!-- Filled dynamically by JS -->
+        </table>
+        
+        <div style="margin-top: 8px;">
+          <p>Results provided by <a href="https://lunrjs.com">Lunr.js</a></p>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+</nav>
+    
+    <div class="container-fluid">
+
+      <!-- Side navigation -->
+      <div class="sidebarcontainer" style="display: none;">
+        
+        <div class="sidebar"><nav class="sidebar">
+  
+
+  <div>
+
+      <div class="thingTitle">
+        <span>Class</span>
+        <code class="thisobject"><a href="process_data.Program.html" class="internal-link" title="This class"><wbr></wbr>Program</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        
+        
+
+        <div class="childrenKindTitle">Methods</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__init__" class="internal-link" title="process_data.Program.__init__">__init__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#__repr__" class="internal-link" title="process_data.Program.__repr__">__repr__</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#create_doc_from_text" class="internal-link" title="process_data.Program.create_doc_from_text">create<wbr></wbr>_doc<wbr></wbr>_from<wbr></wbr>_text</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#reference" class="internal-link" title="process_data.Program.reference">reference</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#retrieve_text_from_pdf" class="internal-link" title="process_data.Program.retrieve_text_from_pdf">retrieve<wbr></wbr>_text<wbr></wbr>_from<wbr></wbr>_pdf</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Attributes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#doc" class="internal-link" title="process_data.Program.doc">doc</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#election_date" class="internal-link" title="process_data.Program.election_date">election<wbr></wbr>_date</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#election_type" class="internal-link" title="process_data.Program.election_type">election<wbr></wbr>_type</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#party" class="internal-link" title="process_data.Program.party">party</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#path" class="internal-link" title="process_data.Program.path">path</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#tags" class="internal-link" title="process_data.Program.tags">tags</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#text" class="internal-link" title="process_data.Program.text">text</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div><div>
+
+      <div class="thingTitle">
+        <span>Module</span>
+        <code><a href="process_data.html" class="internal-link" title="The parent of this class">process<wbr></wbr>_data</a></code> 
+      </div>
+      
+      <div>
+        
+
+        
+         
+
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.PathInfoExtractor.html" class="internal-link" title="process_data.PathInfoExtractor"><wbr></wbr>Path<wbr></wbr>Info<wbr></wbr>Extractor</a></code>
+            </div>
+        
+
+    </li><li class=" thisobject">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.Program.html" class="internal-link" title="process_data.Program"><wbr></wbr>Program</a></code>
+            </div>
+        
+
+    </li>
+</ul>
+
+        <div class="childrenKindTitle">Functions</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#clean_pdf_text" class="internal-link" title="process_data.clean_pdf_text">clean<wbr></wbr>_pdf<wbr></wbr>_text</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#extract_text_pdf" class="internal-link" title="process_data.extract_text_pdf">extract<wbr></wbr>_text<wbr></wbr>_pdf</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#get_all_programs" class="internal-link" title="process_data.get_all_programs">get<wbr></wbr>_all<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#get_programs" class="internal-link" title="process_data.get_programs">get<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#get_specific_program" class="internal-link" title="process_data.get_specific_program">get<wbr></wbr>_specific<wbr></wbr>_program</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#identify_programs" class="internal-link" title="process_data.identify_programs">identify<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#process_all_programs" class="internal-link" title="process_data.process_all_programs">process<wbr></wbr>_all<wbr></wbr>_programs</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_remove_repeating_slogans" class="internal-link" title="process_data._remove_repeating_slogans">_remove<wbr></wbr>_repeating<wbr></wbr>_slogans</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#DOUBLE_DOT" class="internal-link" title="process_data.DOUBLE_DOT">DOUBLE<wbr></wbr>_DOT</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#DOUBLE_SPACE" class="internal-link" title="process_data.DOUBLE_SPACE">DOUBLE<wbr></wbr>_SPACE</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#FORCE_REPROCESSING" class="internal-link" title="process_data.FORCE_REPROCESSING">FORCE<wbr></wbr>_REPROCESSING</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#FORM_FEED" class="internal-link" title="process_data.FORM_FEED">FORM<wbr></wbr>_FEED</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#HYPHENATION" class="internal-link" title="process_data.HYPHENATION">HYPHENATION</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#LARGE_NUMBERS" class="internal-link" title="process_data.LARGE_NUMBERS">LARGE<wbr></wbr>_NUMBERS</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#NEWLINE" class="internal-link" title="process_data.NEWLINE">NEWLINE</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#PAGE_NUM" class="internal-link" title="process_data.PAGE_NUM">PAGE<wbr></wbr>_NUM</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#SINGLE_CHAR" class="internal-link" title="process_data.SINGLE_CHAR">SINGLE<wbr></wbr>_CHAR</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#SINGLE_CHAR_START" class="internal-link" title="process_data.SINGLE_CHAR_START">SINGLE<wbr></wbr>_CHAR<wbr></wbr>_START</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#SPECIAL_CHAR" class="internal-link" title="process_data.SPECIAL_CHAR">SPECIAL<wbr></wbr>_CHAR</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#TAB" class="internal-link" title="process_data.TAB">TAB</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#nlp" class="internal-link" title="process_data.nlp">nlp</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_data_path" class="internal-link" title="process_data._data_path">_data<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_directory" class="internal-link" title="process_data._directory">_directory</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_manifest_path" class="internal-link" title="process_data._manifest_path">_manifest<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_processed_doc_path" class="internal-link" title="process_data._processed_doc_path">_processed<wbr></wbr>_doc<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_processed_path" class="internal-link" title="process_data._processed_path">_processed<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_processed_text_path" class="internal-link" title="process_data._processed_text_path">_processed<wbr></wbr>_text<wbr></wbr>_path</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_programs" class="internal-link" title="process_data._programs">_programs</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_programs_processed" class="internal-link" title="process_data._programs_processed">_programs<wbr></wbr>_processed</a></code>
+            </div>
+        
+
+    </li><li class="private">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.html#_project_root" class="internal-link" title="process_data._project_root">_project<wbr></wbr>_root</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
+
+        
+         
+        
+      </div>
+  </div>
+
+</nav>
+        </div>
+        <div id="collapseSideBar">
+          <a class="btn btn-link" onclick="toggleSideBarCollapse()" title="Toggle Sidebar Collapse">
+          </a>
+        </div> 
+        <script src="sidebartoggle.js" type="text/javascript"></script>
+       
+      </div>
+
+      <div id="main" class="">
+        
+
+        
+
+        <div class="page-header">
+          <h1 class="class"><code><code><a href="process_data.html" class="internal-link">process_data</a></code><wbr></wbr>.<code><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a></code></code></h1>
+          <div id="showPrivate">
+            <button class="btn btn-link" onclick="togglePrivate()">Toggle Private API</button>
+          </div>
+        </div>
+
+        <div class="categoryHeader">
+          class documentation
+        </div>
+
+        <div class="extrasDocstring">
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Program</span>:</code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="process_data.Program.__init__">Program(election_type, party, election_date, tags, path)</a></code></p>
+          <p><a href="classIndex.html#process_data.Program">View In Hierarchy</a></p>
+        </div>
+
+        <div class="moduleDocstring">
+          <div><p>A class to store and manipulate data. The class contains methods to retrieve the text from the pdf, create a spacy
+doc from the text and save the text and doc to a file.</p></div>
+        </div>
+
+        <div id="splitTables">
+          <table class="children sortable" id="id2">
+  
+  
+  <tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__init__" class="internal-link" title="process_data.Program.__init__">__init__</a></code></td>
+    <td>A class to store and manipulate data</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#__repr__" class="internal-link" title="process_data.Program.__repr__">__repr__</a></code></td>
+    <td>Return a string representation of the program.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#create_doc_from_text" class="internal-link" title="process_data.Program.create_doc_from_text">create<wbr></wbr>_doc<wbr></wbr>_from<wbr></wbr>_text</a></code></td>
+    <td>Convert the text to a spacy doc. If the doc has already been created, it will be retrieved from the file. Adds the doc to the program object and saves it to a file.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#reference" class="internal-link" title="process_data.Program.reference">reference</a></code></td>
+    <td>Return a reference to the file, including the party and election.</td>
+  </tr><tr class="method">
+    
+    <td>Method</td>
+    <td><code><a href="#retrieve_text_from_pdf" class="internal-link" title="process_data.Program.retrieve_text_from_pdf">retrieve<wbr></wbr>_text<wbr></wbr>_from<wbr></wbr>_pdf</a></code></td>
+    <td>Retrieve the text from the pdf file. If the text has already been extracted, it will be retrieved from the file. Adds the text to the program object and saves it to a file.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#doc" class="internal-link" title="process_data.Program.doc">doc</a></code></td>
+    <td>The spacy doc instance of the program.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#election_date" class="internal-link" title="process_data.Program.election_date">election<wbr></wbr>_date</a></code></td>
+    <td>The election of the program.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#election_type" class="internal-link" title="process_data.Program.election_type">election<wbr></wbr>_type</a></code></td>
+    <td>The type of the election.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#party" class="internal-link" title="process_data.Program.party">party</a></code></td>
+    <td>The party of the program.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#path" class="internal-link" title="process_data.Program.path">path</a></code></td>
+    <td>The path to the program.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#tags" class="internal-link" title="process_data.Program.tags">tags</a></code></td>
+    <td>The tags of the program.</td>
+  </tr><tr class="instancevariable">
+    
+    <td>Instance Variable</td>
+    <td><code><a href="#text" class="internal-link" title="process_data.Program.text">text</a></code></td>
+    <td>The raw text of the program.</td>
+  </tr>
+</table>
+          
+
+            
+        </div>
+
+        <div id="childList">
+          <div class="basemethod">
+  
+  
+  <a name="process_data.Program.__init__">
+    
+  </a>
+  <a name="__init__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, election_type: <code>str</code>, party: <code>str</code>, election_date: <code>str</code>, tags: <code>list[<wbr></wbr>str]</code>, path: <code>str</code>)</span>:
+    
+    <a class="headerLink" href="#__init__" title="process_data.Program.__init__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>A class to store and manipulate data</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The type of the election.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">party:</span><code>str</code></td><td class="fieldArgDesc">The party of the program.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_date:</span><code>str</code></td><td class="fieldArgDesc">The election of the program.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">tags:</span><code>list[str]</code></td><td class="fieldArgDesc">The tags of the program.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">path:</span><code>str</code></td><td class="fieldArgDesc">The path to the program.</td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="process_data.Program.__repr__">
+    
+  </a>
+  <a name="__repr__">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#__repr__" title="process_data.Program.__repr__">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Return a string representation of the program.</p></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="process_data.Program.create_doc_from_text">
+    
+  </a>
+  <a name="create_doc_from_text">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">create_doc_from_text</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#create_doc_from_text" title="process_data.Program.create_doc_from_text">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Convert the text to a spacy doc. If the doc has already been created, it will be
+retrieved from the file. Adds the doc to the program object and saves it to a file.</p>
+<div class="rst-admonition note">
+<p class="rst-first rst-admonition-title">Note</p>
+<p class="rst-last">Changes self.doc</p>
+</div>
+</div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="process_data.Program.reference">
+    
+  </a>
+  <a name="reference">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">reference</span><span class="function-signature">(self, ext: <code>str</code>) -&gt; <code>str</code></span>:
+    
+    <a class="headerLink" href="#reference" title="process_data.Program.reference">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Return a reference to the file, including the party and election.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">ext:</span><code>str</code></td><td class="fieldArgDesc">The extension of the file.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>str</code></td><td class="fieldArgDesc"><span class="undocumented">Undocumented</span></td></tr></table></div>
+  </div>
+</div><div class="basemethod">
+  
+  
+  <a name="process_data.Program.retrieve_text_from_pdf">
+    
+  </a>
+  <a name="retrieve_text_from_pdf">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">retrieve_text_from_pdf</span><span class="function-signature">(self)</span>:
+    
+    <a class="headerLink" href="#retrieve_text_from_pdf" title="process_data.Program.retrieve_text_from_pdf">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Retrieve the text from the pdf file. If the text has already been extracted,
+it will be retrieved from the file. Adds the text to the program object and
+saves it to a file.</p>
+<div class="rst-admonition note">
+<p class="rst-first rst-admonition-title">Note</p>
+<p class="rst-last">Changes self.text</p>
+</div>
+</div>
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.doc">
+    
+  </a>
+  <a name="doc">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">doc</span>: Doc|<blockquote>
+None</blockquote>
+ =
+    
+    <a class="headerLink" href="#doc" title="process_data.Program.doc">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The spacy doc instance of the program.</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.election_date">
+    
+  </a>
+  <a name="election_date">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">election_date</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#election_date" title="process_data.Program.election_date">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The election of the program.</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.election_type">
+    
+  </a>
+  <a name="election_type">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">election_type</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#election_type" title="process_data.Program.election_type">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The type of the election.</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.party">
+    
+  </a>
+  <a name="party">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">party</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#party" title="process_data.Program.party">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The party of the program.</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.path">
+    
+  </a>
+  <a name="path">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">path</span>: <code>str</code> =
+    
+    <a class="headerLink" href="#path" title="process_data.Program.path">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The path to the program.</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.tags">
+    
+  </a>
+  <a name="tags">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">tags</span>: <code>list[str]</code> =
+    
+    <a class="headerLink" href="#tags" title="process_data.Program.tags">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The tags of the program.</p></div>
+    
+  </div>
+</div><div class="baseinstancevariable">
+  
+  
+  <a name="process_data.Program.text">
+    
+  </a>
+  <a name="text">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">text</span>: str|<blockquote>
+None</blockquote>
+ =
+    
+    <a class="headerLink" href="#text" title="process_data.Program.text">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>The raw text of the program.</p></div>
+    
+  </div>
+</div>
+        </div>
+      
+      </div>
+    </div>
+
+    <footer class="navbar navbar-default">
+
+  
+  <div class="container">
+    <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
+  generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
+    23.9.1 at 2024-02-26 23:08:57.
+  </div>
+
+  <!-- Search related scripts needs to be loaded at the end of HTML 
+    parsing not to introduce overhead and display HTML data asap -->
+  <script src="ajax.js" type="text/javascript"></script>
+  <script src="searchlib.js" type="text/javascript"></script>
+  <script src="search.js" type="text/javascript"></script>
+
+</footer>
+  
+    <script src="pydoctor.js" type="text/javascript"></script>
+
+  </body>
+</html>
