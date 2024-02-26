@@ -25,3 +25,12 @@ jobs:
       run: |
         # Run pydoctor build
         pydoctor --project-name=promisesPromises --project-url=https://github.com/MarcoStrijker/promisesPromises --make-html --html-output=docs --project-base-dir="." --docformat=google src/process_data.py src/utils.py
+
+    - name: Push API documentation to Github Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        commit_message: "Generate API documentation"
+        user_name: "github-actions[bot]"
+        user_email: "github-actions[bot]@users.noreply.github.com"
