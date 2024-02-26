@@ -20,10 +20,10 @@ The programs are stored in a list of Program objects. The Program object contain
 import os
 import re
 from collections import Counter
-from dataclasses import dataclass, field
 from typing import Callable
 
 import spacy
+from spacy import Language
 from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
 
 from pypdf import PdfReader
@@ -32,30 +32,46 @@ from spacy.tokens import Doc
 from src import utils
 
 
-@dataclass(slots=True)
 class Program:
-    """A dataclass to store the information of a program.
-
-    Arguments:
-        election_type {str} -- The type of the election.
-        party {str} -- The party of the program.
-        election {str} -- The election of the program.
-        path {str} -- The path to the program.
     """
-    election_type: str
-    party: str
-    election_date: str
-    tags: list[str]
-    path: str
+    A class to store and manipulate data. The class contains methods to retrieve the text from the pdf, create a spacy
+    doc from the text and save the text and doc to a file.
 
-    text: str | None = field(default=None, init=False)
-    doc: Doc | None = field(default=None, init=False)
+    Attributes:
+        election_type (str): The type of the election.
+        party (str): The party of the program.
+        election_date (str): The election of the program.
+        tags (list[str]): The tags of the program.
+        path (str): The path to the program.
+        text (str | None): The raw text of the program.
+        doc (Doc | None): The spacy doc instance of the program.
+
+    """
+
+    def __init__(self, election_type: str, party: str, election_date: str, tags: list[str], path: str):
+        """A class to store and manipulate data
+
+        Arguments:
+            election_type (str): The type of the election.
+            party (str): The party of the program.
+            election_date (str): The election of the program.
+            tags (list[str]): The tags of the program.
+            path (str): The path to the program.
+
+        """
+        self.election_type = election_type
+        self.party = party
+        self.election_date = election_date
+        self.tags = tags
+        self.path = path
+        self.text: str | None = None
+        self.doc: Doc | None = None
 
     def reference(self, ext: str) -> str:
         """Return a reference to the file, including the party and election.
 
         Args:
-            ext {str} -- The extension of the file.
+            ext (str): The extension of the file.
         """
         # TODO: make more flexible for different election formats
         filename = f"{self.election_type}-{self.party}-{self.election_date}"
@@ -72,16 +88,15 @@ class Program:
         it will be retrieved from the file. Adds the text to the program object and
         saves it to a file.
 
-        Changes:
-            self.text: str -- The text of the program.
-
+        Note:
+            Changes self.text
         """
         # Return text if it has already been extracted
         if self.text is not None:
             return
 
         # Retrieve text from file if it exists
-        path = os.path.join(processed_text_path, self.reference("txt"))
+        path = os.path.join(_processed_text_path, self.reference("txt"))
         if os.path.exists(path) and not FORCE_REPROCESSING:
             with open(path, "r", encoding='utf-8') as f:
                 self.text = f.read()
@@ -102,8 +117,8 @@ class Program:
         """Convert the text to a spacy doc. If the doc has already been created, it will be
         retrieved from the file. Adds the doc to the program object and saves it to a file.
 
-        Changes:
-            self.doc: Doc -- The spacy doc of the program.
+        Note:
+            Changes self.doc
         """
 
         # Return doc if it has already been created
@@ -115,7 +130,7 @@ class Program:
             raise ValueError("No text to create a doc from. Call retrieve_text_from_pdf() first to retrieve the text.")
 
         # Compute path to file
-        path = os.path.join(processed_doc_path, self.reference("spacy"))
+        path = os.path.join(_processed_doc_path, self.reference("spacy"))
 
         # Retrieve doc from file if it exists on the disk
         if os.path.exists(path) and not FORCE_REPROCESSING:
@@ -144,12 +159,13 @@ class PathInfoExtractor:
     When identifying programs, the path to the program contains information about the program, for example,
     election type, the election or the party. This class contains methods to extract this information from the path.
 
-    For example, if the path is .../TK/2017/VVD.pdf, the election type is TK, the election date is 2017 and the party
+    For example, if the path is `.../TK/2017/VVD.pdf`, the election type is TK, the election date is 2017 and the party
     is VVD. The election type is always directly after the "manifests" folder in the path. In this specific example,
     the election date is always the second to last folder in the path and the party is always the file name without
-    the .pdf extension. So, the output of the extractor should be like this:
+    the .pdf extension. So, the output of the extractor should be like this.
 
-    {"election_type": "TK", "election_date": "2017", "party": "VVD"}
+    Example:
+        {"election_type": "TK", "election_date": "2017", "party": "VVD"}
 
     When adding a new election type, the extractor should be added to the EXTRACTOR_REFERENCE dictionary and the
     extractor should be implemented as a static method in this class. The extractor should handle the parsing of the
@@ -166,14 +182,14 @@ class PathInfoExtractor:
         the "manifests" folder in the path.
 
         Arguments:
-            path {str} -- The path to the program.
+            path (str) -- The path to the program.
 
         Raises:
             ValueError: If 'manifests' is not in the path.
             IndexError: If manifest is the last folder in the path.
 
         Returns:
-            str -- The election type.
+            The election type.
         """
 
         # Split the path on the os separator
@@ -194,7 +210,7 @@ class PathInfoExtractor:
         doesn't have selectable text or the program is a concept version.
 
         Arguments:
-            filename {str} -- The path to the program.
+            filename (str): The path to the program.
 
         Returns:
             tuple[str, list[str]] -- The filename without the tags and the tags.
@@ -220,10 +236,10 @@ class PathInfoExtractor:
         .../{election_type}/{election_date}/{party}.pdf
 
         Arguments:
-            path {str} -- The path to the program.
+            path (str): The path to the program.
 
         Returns:
-            tuple[str, str, str] -- The election type, election date and party.
+            The election type, election date and party.
         """
         # Remove the .pdf extension
         path = path.removesuffix(".pdf")
@@ -232,29 +248,27 @@ class PathInfoExtractor:
         split_path = path.split(os.sep)
 
         # Get info from the path
-        filename = split_path[-1]
-        election_date = split_path[-2]
-        election_type = split_path[-3]
+        filename, election_date, election_type = split_path[-1], split_path[-2], split_path[-3]
 
         # Extract the tags from the filename
         filename, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(filename)
 
         return {"election_type": election_type, "election_date": election_date, "party": filename, "tags": tags}
 
-    # Reference to the methods to extract the information from the path for each election type
     EXTRACTOR_REFERENCE = {
         "TK": extractor_type_date_party_tags
     }
+    """Reference to the methods to extract the information from the path for each election type"""
 
 
 def extract_text_pdf(path: str) -> str:
     """Extract the text from a pdf file using pypdf
 
     Arguments:
-        path {str} -- The path to the pdf file.
+        path (str): The path to the pdf file.
 
     Returns:
-        str -- The text from the pdf file.
+        The text from the pdf file.
     """
     reader = PdfReader(path)
     text = ""
@@ -269,10 +283,10 @@ def identify_programs(target: str) -> list[Program]:
     election
 
     Arguments:
-        target {str} -- The directory where the programs are stored.
+        target (str): The directory where the programs are stored.
 
     Returns:
-        list[Program] -- A list of programs.
+        A list of programs.
     """
     found_programs = []
     for root, _, files in os.walk(target):
@@ -314,10 +328,10 @@ def clean_pdf_text(string: str) -> str:
     Order of cleaning is important, as some patterns are dependent on the previous patterns.
 
     Arguments:
-        string {str} -- The text to clean.
+        string (str): The text to clean.
 
     Returns:
-        str -- The cleaned text.
+        The cleaned text.
     """
 
     string = SPECIAL_CHAR.sub(" ", string)
@@ -341,13 +355,13 @@ def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
     If it does, it removes all occurrences of it and recursively calls itself to check if there are more slogans.
 
     Args:
-        text {str} -- The text from which the slogans should be removed.
+        text (str): The text from which the slogans should be removed.
 
     Keyword Arguments:
-        start_size {int} -- The size of the first snippet. Used to do efficient recursion. (default: {None})
+        start_size (int): The size of the first snippet. Used to do efficient recursion. (default: {None})
 
     Returns:
-        str -- The text without slogans.
+        The text without slogans.
 
     """
 
@@ -403,10 +417,8 @@ def process_all_programs() -> None:
     """Process all programs by retrieving the text from the pdf, creating a doc from the text
     and saving the text and doc to a file.
 
-    Arguments:
-        programs {list[Program]} -- A list of programs.
     """
-    global programs_processed
+    global _programs_processed
 
     print(f"Will process {len(_programs)} programs")
 
@@ -419,7 +431,7 @@ def process_all_programs() -> None:
 
     # Change variable to true to indicate that all programs have been processed
     # This enables the user to call the get_programs() api
-    programs_processed = True
+    _programs_processed = True
     print("All programs processed, ready for analysis")
 
 
@@ -430,9 +442,9 @@ def get_all_programs() -> list[Program]:
         Exception: If the programs have not been processed yet.
 
     Returns:
-        list[Program] -- A list of programs.
+        A list of all programs.
     """
-    if not programs_processed:
+    if not _programs_processed:
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
                            " before calling this function.")
 
@@ -446,13 +458,13 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
     will be raised.
 
     Keyword Arguments:
-        election_type {str} -- The type of the election. (default: {None})
-        party {str} -- The party of the program. (default: {None})
-        election_date {str} -- The date of the election. (default: {None})
-        tags {list[str]} -- The tags of the program. (default: {None})
+        election_type (str): The type of the election. (default: {None})
+        party (str): The party of the program. (default: {None})
+        election_date (str): The date of the election. (default: {None})
+        tags (list[str]): The tags of the program. (default: {None})
 
     Returns:
-        list[Program] -- A list of programs.
+        A list of requested programs.
 
     Raises:
         RuntimeError: If the programs have not been processed yet.
@@ -466,7 +478,7 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     # Raise if programs have not been processed yet
-    if not programs_processed:
+    if not _programs_processed:
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
                            " before calling this function.")
 
@@ -496,15 +508,15 @@ def get_specific_program(*, election_type: str, party: str, election_date: str,
     been processed yet, an exception will be raised.
 
     Arguments:
-        election_type {str} -- The type of the election.
-        party {str} -- The party of the program.
-        election_date {str} -- The date of the election.
+        election_type (str): The type of the election.
+        party (str): The party of the program.
+        election_date (str): The date of the election.
 
     Keyword Arguments:
-        tags {list[str]} -- The tags of the program. (default: {None})
+        tags (list[str]): The tags of the program. (default: {None})
 
     Returns:
-        Program -- The program.
+        Program -- The requested program.
 
     Raises:
         ValueError: If no program is found.
@@ -517,7 +529,7 @@ def get_specific_program(*, election_type: str, party: str, election_date: str,
     assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
-    if not programs_processed:
+    if not _programs_processed:
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
                            " before calling this function.")
 
@@ -540,69 +552,82 @@ def get_specific_program(*, election_type: str, party: str, election_date: str,
                      f" party: {party}, election date: {election_date}")
 
 
-# For debugging purposes, set to true to force (re)processing of all programs
 FORCE_REPROCESSING = False
+"""For debugging purposes, set to true to force (re)processing of all programs.
+If set to true, the text and doc will always be retrieved from the pdf and saved to a file."""
 
 # Define regex patterns to clean the parsed text from a pdf file
 # TODO: Add more special characters
 # TODO: Refine regex patterns
-# Matches special characters
-SPECIAL_CHAR = re.compile(r'[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]')
-# Matches newlines inbetween words
-NEWLINE = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
-# Matches multiple spaces
-DOUBLE_SPACE = re.compile(r"\s+")
-# Matches multiple dots, whitespace is allowed between and around the dots
-DOUBLE_DOT = re.compile(r"(\s*\.\s*)+")
-# Matches tabs
-TAB = re.compile(r"\t")
-# Matches page numbers, which is a number surrounded by newlines and possibly spaces on either side
-PAGE_NUM = re.compile(r"\n+\s*\d+\s*\n+")
-# Matches large numbers, which is a number with potentially spaces between these numbers
-# Only matches when digits, spaces and new lines that are 9 characters or longer
-LARGE_NUMBERS = re.compile(r"[\d\s\n]{9,}")
-# Matches form feeds
-FORM_FEED = re.compile(r"\f")
-# When hyphenation occurs, one word is split in two and a hyphen is added at
-# the end of the first part, however, when extracting the text from the pdf,
-# the hyphen should be removed and the two parts should be joined together.
-HYPHENATION = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
-# Matches single characters
-SINGLE_CHAR = re.compile(r"(?<=\s)\w(?=\s|$)")
-SINGLE_CHAR_START = re.compile(r"^\w\s")
+
+SPECIAL_CHAR: re.Pattern = re.compile(r'[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]')  # Matches special characters
+"""Regex pattern that matches special characters"""
+
+NEWLINE: re.Pattern = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
+"""Regex pattern that matches new lines that are present inbetween words"""
+
+DOUBLE_SPACE: re.Pattern = re.compile(r"\s+")
+"""Regex pattern that matches multiple spaces"""
+
+DOUBLE_DOT: re.Pattern = re.compile(r"(\s*\.\s*)+")
+"""Regex pattern that matches multiple dots, whitespace is allowed between and around the dots"""
+
+TAB: re.Pattern = re.compile(r"\t")
+"""Regex pattern that matches tabs"""
+
+PAGE_NUM: re.Pattern = re.compile(r"\n+\s*\d+\s*\n+")
+"""Regex pattern that matches page numbers, which is a number surrounded by newlines
+and possibly spaces on either side"""
+
+LARGE_NUMBERS: re.Pattern = re.compile(r"[\d\s\n]{9,}")
+"""Regex pattern that matches large numbers, which is a number with potentially spaces between these numbers.
+Only matches when digits, spaces and new lines that are 9 characters or longer"""
+
+FORM_FEED: re.Pattern = re.compile(r"\f")
+"""Regex pattern that matches form feeds"""
+
+HYPHENATION: re.Pattern = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
+"""Regex pattern that matches hyphenation. When hyphenation occurs, one word is split in two and a hyphen is 
+added at the end of the first part, however, when extracting the text from the pdf, the hyphen should be 
+removed and the two parts should be joined together."""
+
+SINGLE_CHAR: re.Pattern = re.compile(r"(?<=\s)\w(?=\s|$)")
+"""Regex pattern that matches single characters, which are characters that 
+are surrounded by whitespace or the end of the string"""
+
+SINGLE_CHAR_START: re.Pattern = re.compile(r"^\w\s")
+"""Regex pattern that matches single characters at the start of the string"""
 
 # Define paths
-directory = os.path.dirname(os.path.realpath(__file__))
-project_root = os.path.dirname(directory)
-data_path = os.path.join(project_root, "data")
-manifest_path = os.path.join(data_path, "manifests")
-processed_path = os.path.join(project_root, "processed")
-processed_text_path = os.path.join(processed_path, "text")
-processed_doc_path = os.path.join(processed_path, "doc")
+_directory: str = os.path.dirname(os.path.realpath(__file__))
+_project_root: str = os.path.dirname(_directory)
+_data_path: str = os.path.join(_project_root, "data")
+_manifest_path: str = os.path.join(_data_path, "manifests")
+_processed_path: str = os.path.join(_project_root, "processed")
+_processed_text_path: str = os.path.join(_processed_path, "text")
+_processed_doc_path: str = os.path.join(_processed_path, "doc")
 
 # Ensure output folders exist
-if not os.path.exists(processed_path):
-    os.mkdir(processed_path)
-if not os.path.exists(processed_text_path):
-    os.mkdir(processed_text_path)
-if not os.path.exists(processed_doc_path):
-    os.mkdir(processed_doc_path)
+if not os.path.exists(_processed_path):
+    os.mkdir(_processed_path)
+if not os.path.exists(_processed_text_path):
+    os.mkdir(_processed_text_path)
+if not os.path.exists(_processed_doc_path):
+    os.mkdir(_processed_doc_path)
 
-# Ensure programs have been processed when user calls the get_programs() api
-# This variable is set to true when all programs have been processed
-programs_processed = False
 
-# Load spacy model
-nlp = spacy.load("nl_core_news_lg")
+_programs_processed = False
+"""Indicates whether all programs have been processed by the process_all_programs() function
+This is necessary to prevent the user from calling the get_programs() api before the programs have been processed"""
 
-# Add syllables pipe to spacy
-# This is necessary for the syllables_count attribute to be available on tokens
-# Community package based on
+nlp: Language = spacy.load("nl_core_news_lg")
+"""The core spacy model for the Dutch language. This is used to create a spacy doc from the text."""
+
 nlp.add_pipe("syllables", after="tagger")
+"""Add syllables pipe to spacy, this is necessary for the syllables_count attribute to be available on tokens"""
 
-# Get all programs
-_programs = identify_programs(manifest_path)
-
+_programs: list[Program] = identify_programs(_manifest_path)
+"""Internal list of all programs"""
 
 if __name__ == "__main__":
     process_all_programs()
