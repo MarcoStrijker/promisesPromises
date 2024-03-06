@@ -7,17 +7,17 @@ Functions:
 """
 
 
-def progress(count: int, total: int, suffix: object | str | None = None):
+def progress(count: int, total: int, suffix: object | str | None = None) -> None:
     """
     Prints a progress bar to the console. Pycharm does not support this out of the box, so
     set emulate terminal in output console to true in the run configuration.
 
     Args:
-        count {int} -- The current count, this is the index + 1 of the current iteration.
-        total {int} -- The total number of iterations.
+        count (int): The current count, this is the index + 1 of the current iteration.
+        total (int): The total number of iterations.
 
     Keyword Arguments:
-        suffix {str} -- The suffix to be printed after the progress bar. (default: {None})
+        suffix (str): The suffix to be printed after the progress bar. (default: {None})
 
     Raises:
         AssertionError: Raised if count is not an integer.
