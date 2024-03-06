@@ -19,15 +19,16 @@ The programs are stored in a list of Program objects. The Program object contain
 
 import os
 import re
+from re import Pattern
 from collections import Counter
 from typing import Callable
 
 import spacy
 from spacy import Language
+from spacy.tokens import Doc
 from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
 
 from pypdf import PdfReader
-from spacy.tokens import Doc
 
 from src import utils
 
@@ -38,15 +39,18 @@ class Program:
     doc from the text and save the text and doc to a file.
 
     Attributes:
+        text (str | None): The raw text of the program (Default: None).
+        doc (Doc | None): The spacy doc instance of the program (Default: None).
         election_type (str): The type of the election.
         party (str): The party of the program.
         election_date (str): The election of the program.
         tags (list[str]): The tags of the program.
         path (str): The path to the program.
-        text (str | None): The raw text of the program.
-        doc (Doc | None): The spacy doc instance of the program.
 
     """
+
+    text: str | None = None
+    doc: Doc | None = None
 
     def __init__(self, election_type: str, party: str, election_date: str, tags: list[str], path: str):
         """A class to store and manipulate data
@@ -64,8 +68,6 @@ class Program:
         self.election_date = election_date
         self.tags = tags
         self.path = path
-        self.text: str | None = None
-        self.doc: Doc | None = None
 
     def reference(self, ext: str) -> str:
         """Return a reference to the file, including the party and election.
@@ -334,16 +336,16 @@ def clean_pdf_text(string: str) -> str:
         The cleaned text.
     """
 
-    string = SPECIAL_CHAR.sub(" ", string)
-    string = PAGE_NUM.sub(" ", string)
-    string = HYPHENATION.sub("", string)
-    string = NEWLINE.sub(" ", string)
-    string = TAB.sub(" ", string)
-    string = DOUBLE_DOT.sub(". ", string)
-    string = FORM_FEED.sub(" ", string)
-    string = LARGE_NUMBERS.sub(" ", string)
-    string = SINGLE_CHAR.sub(" ", string)
-    string = DOUBLE_SPACE.sub(" ", string)
+    string = special_char_pattern.sub(" ", string)
+    string = page_num_pattern.sub(" ", string)
+    string = hyphenation_pattern.sub("", string)
+    string = newline_pattern.sub(" ", string)
+    string = tab_pattern.sub(" ", string)
+    string = double_dot_pattern.sub(". ", string)
+    string = form_feed_pattern.sub(" ", string)
+    string = large_numbers_pattern.sub(" ", string)
+    string = single_char_pattern.sub(" ", string)
+    string = double_space_pattern.sub(" ", string)
 
     return string.strip()
 
@@ -560,42 +562,42 @@ If set to true, the text and doc will always be retrieved from the pdf and saved
 # TODO: Add more special characters
 # TODO: Refine regex patterns
 
-SPECIAL_CHAR: re.Pattern = re.compile(r'[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]')  # Matches special characters
+special_char_pattern: Pattern = re.compile(r'[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]')
 """Regex pattern that matches special characters"""
 
-NEWLINE: re.Pattern = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
+newline_pattern: Pattern = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
 """Regex pattern that matches new lines that are present inbetween words"""
 
-DOUBLE_SPACE: re.Pattern = re.compile(r"\s+")
+double_space_pattern: Pattern = re.compile(r"\s+")
 """Regex pattern that matches multiple spaces"""
 
-DOUBLE_DOT: re.Pattern = re.compile(r"(\s*\.\s*)+")
+double_dot_pattern: Pattern = re.compile(r"(\s*\.\s*)+")
 """Regex pattern that matches multiple dots, whitespace is allowed between and around the dots"""
 
-TAB: re.Pattern = re.compile(r"\t")
+tab_pattern: Pattern = re.compile(r"\t")
 """Regex pattern that matches tabs"""
 
-PAGE_NUM: re.Pattern = re.compile(r"\n+\s*\d+\s*\n+")
+page_num_pattern: Pattern = re.compile(r"\n+\s*\d+\s*\n+")
 """Regex pattern that matches page numbers, which is a number surrounded by newlines
 and possibly spaces on either side"""
 
-LARGE_NUMBERS: re.Pattern = re.compile(r"[\d\s\n]{9,}")
+large_numbers_pattern: Pattern = re.compile(r"[\d\s\n]{9,}")
 """Regex pattern that matches large numbers, which is a number with potentially spaces between these numbers.
 Only matches when digits, spaces and new lines that are 9 characters or longer"""
 
-FORM_FEED: re.Pattern = re.compile(r"\f")
+form_feed_pattern: Pattern = re.compile(r"\f")
 """Regex pattern that matches form feeds"""
 
-HYPHENATION: re.Pattern = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
+hyphenation_pattern: Pattern = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
 """Regex pattern that matches hyphenation. When hyphenation occurs, one word is split in two and a hyphen is 
 added at the end of the first part, however, when extracting the text from the pdf, the hyphen should be 
 removed and the two parts should be joined together."""
 
-SINGLE_CHAR: re.Pattern = re.compile(r"(?<=\s)\w(?=\s|$)")
+single_char_pattern: Pattern = re.compile(r"(?<=\s)\w(?=\s|$)")
 """Regex pattern that matches single characters, which are characters that 
 are surrounded by whitespace or the end of the string"""
 
-SINGLE_CHAR_START: re.Pattern = re.compile(r"^\w\s")
+single_char_start_pattern: Pattern = re.compile(r"^\w\s")
 """Regex pattern that matches single characters at the start of the string"""
 
 # Define paths
@@ -623,8 +625,8 @@ This is necessary to prevent the user from calling the get_programs() api before
 nlp: Language = spacy.load("nl_core_news_lg")
 """The core spacy model for the Dutch language. This is used to create a spacy doc from the text."""
 
+# Add syllables pipe to spacy, this is necessary for the syllables_count attribute to be available on tokens
 nlp.add_pipe("syllables", after="tagger")
-"""Add syllables pipe to spacy, this is necessary for the syllables_count attribute to be available on tokens"""
 
 _programs: list[Program] = identify_programs(_manifest_path)
 """Internal list of all programs"""
