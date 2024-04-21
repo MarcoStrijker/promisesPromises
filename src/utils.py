@@ -9,6 +9,7 @@ Functions:
 
 from datetime import timedelta as td
 
+
 _run_times = []
 """List of run times of the programs"""
 
@@ -33,8 +34,6 @@ def progress(count: int, total: int, suffix: object | str = None):
         AssertionError: Raised if count is larger than total.
 
     """
-
-    # TODO: until the progress bar is finished silence and collect the stdout.
 
     # Quickly check if the arguments are valid.
     assert isinstance(count, int), "Count must be an integer."
