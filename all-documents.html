@@ -156,6 +156,22 @@
             <div class="kind">Class</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">A class to store and manipulate data. The class contains methods to retrieve the text from the pdf, create a spacy doc from the text and save the text and doc to a file.</div>
+          </li><li id="process_data.Program.text">
+            
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.<wbr></wbr>Program<wbr></wbr>.text</div>
+            <div class="url">process_data.Program.html#text</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Instance Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">The raw text of the program (Default: None).</div>
+          </li><li id="process_data.Program.doc">
+            
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.<wbr></wbr>Program<wbr></wbr>.doc</div>
+            <div class="url">process_data.Program.html#doc</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Instance Variable</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">The spacy doc instance of the program (Default: None).</div>
           </li><li id="process_data.Program.election_type">
             
             <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.<wbr></wbr>Program<wbr></wbr>.election<wbr></wbr>_type</div>
@@ -196,22 +212,6 @@
             <div class="kind">Instance Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">The path to the program.</div>
-          </li><li id="process_data.Program.text">
-            
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.<wbr></wbr>Program<wbr></wbr>.text</div>
-            <div class="url">process_data.Program.html#text</div>
-            <div class="type">Attribute</div>
-            <div class="kind">Instance Variable</div>
-            <div class="privacy">PUBLIC</div>
-            <div class="summary">The raw text of the program.</div>
-          </li><li id="process_data.Program.doc">
-            
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.<wbr></wbr>Program<wbr></wbr>.doc</div>
-            <div class="url">process_data.Program.html#doc</div>
-            <div class="type">Attribute</div>
-            <div class="kind">Instance Variable</div>
-            <div class="privacy">PUBLIC</div>
-            <div class="summary">The spacy doc instance of the program.</div>
           </li><li id="process_data.Program.__init__">
             
             <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.<wbr></wbr>Program<wbr></wbr>.__init__</div>
@@ -364,92 +364,92 @@
             <div class="kind">Constant</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">For debugging purposes, set to true to force (re)processing of all programs. If set to true, the text and doc will always be retrieved from the pdf and saved to a file.</div>
-          </li><li id="process_data.SPECIAL_CHAR">
+          </li><li id="process_data.special_char_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.SPECIAL<wbr></wbr>_CHAR</div>
-            <div class="url">process_data.html#SPECIAL_CHAR</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.special<wbr></wbr>_char<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#special_char_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches special characters</div>
-          </li><li id="process_data.NEWLINE">
+          </li><li id="process_data.newline_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.NEWLINE</div>
-            <div class="url">process_data.html#NEWLINE</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.newline<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#newline_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches new lines that are present inbetween words</div>
-          </li><li id="process_data.DOUBLE_SPACE">
+          </li><li id="process_data.double_space_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.DOUBLE<wbr></wbr>_SPACE</div>
-            <div class="url">process_data.html#DOUBLE_SPACE</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.double<wbr></wbr>_space<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#double_space_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches multiple spaces</div>
-          </li><li id="process_data.DOUBLE_DOT">
+          </li><li id="process_data.double_dot_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.DOUBLE<wbr></wbr>_DOT</div>
-            <div class="url">process_data.html#DOUBLE_DOT</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.double<wbr></wbr>_dot<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#double_dot_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches multiple dots, whitespace is allowed between and around the dots</div>
-          </li><li id="process_data.TAB">
+          </li><li id="process_data.tab_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.TAB</div>
-            <div class="url">process_data.html#TAB</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.tab<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#tab_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches tabs</div>
-          </li><li id="process_data.PAGE_NUM">
+          </li><li id="process_data.page_num_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.PAGE<wbr></wbr>_NUM</div>
-            <div class="url">process_data.html#PAGE_NUM</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.page<wbr></wbr>_num<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#page_num_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches page numbers, which is a number surrounded by newlines and possibly spaces on either side</div>
-          </li><li id="process_data.LARGE_NUMBERS">
+          </li><li id="process_data.large_numbers_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.LARGE<wbr></wbr>_NUMBERS</div>
-            <div class="url">process_data.html#LARGE_NUMBERS</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.large<wbr></wbr>_numbers<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#large_numbers_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches large numbers, which is a number with potentially spaces between these numbers. Only matches when digits, spaces and new lines that are 9 characters or longer</div>
-          </li><li id="process_data.FORM_FEED">
+          </li><li id="process_data.form_feed_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.FORM<wbr></wbr>_FEED</div>
-            <div class="url">process_data.html#FORM_FEED</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.form<wbr></wbr>_feed<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#form_feed_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches form feeds</div>
-          </li><li id="process_data.HYPHENATION">
+          </li><li id="process_data.hyphenation_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.HYPHENATION</div>
-            <div class="url">process_data.html#HYPHENATION</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.hyphenation<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#hyphenation_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches hyphenation. When hyphenation occurs, one word is split in two and a hyphen is added at the end of the first part, however, when extracting the text from the pdf, the hyphen should be removed and the two parts should be joined together.</div>
-          </li><li id="process_data.SINGLE_CHAR">
+          </li><li id="process_data.single_char_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.SINGLE<wbr></wbr>_CHAR</div>
-            <div class="url">process_data.html#SINGLE_CHAR</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.single<wbr></wbr>_char<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#single_char_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches single characters, which are characters that are surrounded by whitespace or the end of the string</div>
-          </li><li id="process_data.SINGLE_CHAR_START">
+          </li><li id="process_data.single_char_start_pattern">
             
-            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.SINGLE<wbr></wbr>_CHAR<wbr></wbr>_START</div>
-            <div class="url">process_data.html#SINGLE_CHAR_START</div>
+            <div class="fullName">process<wbr></wbr>_data<wbr></wbr>.single<wbr></wbr>_char<wbr></wbr>_start<wbr></wbr>_pattern</div>
+            <div class="url">process_data.html#single_char_start_pattern</div>
             <div class="type">Attribute</div>
-            <div class="kind">Constant</div>
+            <div class="kind">Variable</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Regex pattern that matches single characters at the start of the string</div>
           </li><li id="process_data._directory">
@@ -532,6 +532,14 @@
             <div class="kind">Variable</div>
             <div class="privacy">PRIVATE</div>
             <div class="summary">Internal list of all programs</div>
+          </li><li id="utils._run_times">
+            
+            <div class="fullName">utils<wbr></wbr>._run<wbr></wbr>_times</div>
+            <div class="url">utils.html#_run_times</div>
+            <div class="type">Attribute</div>
+            <div class="kind">Variable</div>
+            <div class="privacy">PRIVATE</div>
+            <div class="summary">List of run times of the programs</div>
           </li><li id="utils.progress">
             
             <div class="fullName">utils<wbr></wbr>.progress</div>
@@ -540,6 +548,14 @@
             <div class="kind">Function</div>
             <div class="privacy">PUBLIC</div>
             <div class="summary">Prints a progress bar to the console. Pycharm does not support this out of the box, so set emulate terminal in output console to true in the run configuration.</div>
+          </li><li id="utils.calculate_remaining_processing_time">
+            
+            <div class="fullName">utils<wbr></wbr>.calculate<wbr></wbr>_remaining<wbr></wbr>_processing<wbr></wbr>_time</div>
+            <div class="url">utils.html#calculate_remaining_processing_time</div>
+            <div class="type">Function</div>
+            <div class="kind">Function</div>
+            <div class="privacy">PUBLIC</div>
+            <div class="summary">Calculates the remaining processing time for the remaining programs.</div>
           </li>
        </ul>
     </div>

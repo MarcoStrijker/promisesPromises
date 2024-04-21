@@ -163,6 +163,16 @@
         
 
         
+            <div class="itemName"><code><a href="#calculate_remaining_processing_time" class="internal-link" title="utils.calculate_remaining_processing_time">calculate<wbr></wbr>_remaining<wbr></wbr>_processing<wbr></wbr>_time</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="#progress" class="internal-link" title="utils.progress">progress</a></code>
             </div>
         
@@ -173,8 +183,21 @@
         
          
 
+        <div class="childrenKindTitle">Variables</div>
+        <ul>
+    
+    <li class="private">
         
-         
+        
+        
+
+        
+            <div class="itemName"><code><a href="#_run_times" class="internal-link" title="utils._run_times">_run<wbr></wbr>_times</a></code>
+            </div>
+        
+
+    </li>
+</ul> 
 
         
          
@@ -209,7 +232,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <a href="https://github.com/MarcoStrijker/promisesPromises/tree/da1c0dbe29ecf3219000515d18a5b924f5c416ab/src/utils.py" class="sourceLink">(source)</a>
+          <a href="https://github.com/MarcoStrijker/promisesPromises/tree/0aa6a52dc4079d95e41668066d417b68a8564175/src/utils.py" class="sourceLink">(source)</a>
           <p></p>
         </div>
 
@@ -219,6 +242,7 @@
 <dt>Functions:</dt>
 <dd><ul class="rst-first rst-last rst-simple">
 <li>progress: Prints a progress bar to the console.</li>
+<li>calculate_remaining_processing_time: Calculates the remaining processing time for the remaining programs.</li>
 </ul>
 </dd>
 </dl>
@@ -232,8 +256,18 @@
   <tr class="function">
     
     <td>Function</td>
+    <td><code><a href="#calculate_remaining_processing_time" class="internal-link" title="utils.calculate_remaining_processing_time">calculate<wbr></wbr>_remaining<wbr></wbr>_processing<wbr></wbr>_time</a></code></td>
+    <td>Calculates the remaining processing time for the remaining programs.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
     <td><code><a href="#progress" class="internal-link" title="utils.progress">progress</a></code></td>
     <td>Prints a progress bar to the console. Pycharm does not support this out of the box, so set emulate terminal in output console to true in the run configuration.</td>
+  </tr><tr class="variable private">
+    
+    <td>Variable</td>
+    <td><code><a href="#_run_times" class="internal-link" title="utils._run_times">_run<wbr></wbr>_times</a></code></td>
+    <td>List of run times of the programs</td>
   </tr>
 </table>
           
@@ -245,6 +279,35 @@
           <div class="basefunction">
   
   
+  <a name="utils.calculate_remaining_processing_time">
+    
+  </a>
+  <a name="calculate_remaining_processing_time">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">calculate_remaining_processing_time</span><span class="function-signature">(current: <code>int</code>, total: <code>int</code>, run_time: <code>int|float</code>) -&gt; <code>int</code></span>:
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/0aa6a52dc4079d95e41668066d417b68a8564175/src/utils.py#L69">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#calculate_remaining_processing_time" title="utils.calculate_remaining_processing_time">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Calculates the remaining processing time for the remaining programs.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">current:</span><code>int</code></td><td class="fieldArgDesc">The current index of the program.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">total:</span><code>int</code></td><td class="fieldArgDesc">The total number of programs.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">run<wbr></wbr>_time:</span>int|<blockquote>
+float</blockquote>
+</td><td class="fieldArgDesc">The time it took to process the current program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>int</code></td><td class="fieldArgDesc">The remaining processing time in seconds.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
   <a name="utils.progress">
     
   </a>
@@ -254,8 +317,8 @@
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">progress</span><span class="function-signature">(count: <code>int</code>, total: <code>int</code>, suffix: <code>object|str|None</code> = None)</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/da1c0dbe29ecf3219000515d18a5b924f5c416ab/src/utils.py#L10">
+    <span class="py-keyword">def</span> <span class="py-defname">progress</span><span class="function-signature">(count: <code>int</code>, total: <code>int</code>, suffix: <code>object|str</code> = None)</span>:
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/0aa6a52dc4079d95e41668066d417b68a8564175/src/utils.py#L17">
       
       (source)
     </a>
@@ -268,7 +331,38 @@
   <div class="docstring functionBody">
     
     <div><p>Prints a progress bar to the console. Pycharm does not support this out of the box, so
-set emulate terminal in output console to true in the run configuration.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">count:</span><code>int</code></td><td class="fieldArgDesc">The current count, this is the index + 1 of the current iteration.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">total:</span><code>int</code></td><td class="fieldArgDesc">The total number of iterations.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">suffix:</span><code>str</code></td><td class="fieldArgDesc">The suffix to be printed after the progress bar. (default: {None})</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if count is not an integer.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if total is not an integer.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if count is negative.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if total is not positive.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if count is larger than total.</td></tr></table></div>
+set emulate terminal in output console to true in the run configuration.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">count:</span><code>int</code></td><td class="fieldArgDesc">The current count, this is the index + 1 of the current iteration.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">total:</span><code>int</code></td><td class="fieldArgDesc">The total number of iterations.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">suffix:</span>object|<blockquote>
+str</blockquote>
+|<blockquote>
+None</blockquote>
+</td><td class="fieldArgDesc">The suffix to be printed after the progress bar. (default: {None})</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if count is not an integer.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if total is not an integer.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if count is negative.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if total is not positive.</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>Raised if count is larger than total.</td></tr></table></div>
+  </div>
+</div><div class="basevariable private">
+  
+  
+  <a name="utils._run_times">
+    
+  </a>
+  <a name="_run_times">
+    
+  </a>
+  <div class="functionHeader">
+    
+    <span class="py-defname">_run_times</span>: <code>list</code> =
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/0aa6a52dc4079d95e41668066d417b68a8564175/src/utils.py#L13">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#_run_times" title="utils._run_times">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>List of run times of the programs</p></div>
+    
   </div>
 </div>
         </div>
@@ -282,7 +376,7 @@ set emulate terminal in output console to true in the run configuration.</p><tab
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    23.9.1 at 2024-02-26 23:18:58.
+    23.9.1 at 2024-04-21 09:41:11.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 
