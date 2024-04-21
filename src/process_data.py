@@ -18,9 +18,12 @@ The programs are stored in a list of Program objects. The Program object contain
 """
 
 import os
+import random
 import re
-from re import Pattern
+import time
+
 from collections import Counter
+from re import Pattern
 from typing import Callable
 
 import spacy
@@ -420,16 +423,27 @@ def process_all_programs() -> None:
     and saving the text and doc to a file.
 
     """
-    global _programs_processed
+    global programs_processed, _programs
 
     print(f"Will process {len(_programs)} programs")
 
-    for i, p in enumerate(_programs):
-        utils.progress(i + 1, len(_programs), p)
+    # Randomize the order of the programs to prevent the same program from being processed first every time
+    _programs = random.sample(_programs, len(_programs))
 
+    for i, p in enumerate(_programs):
+        s = time.perf_counter()
         # TODO: suppress and collect stdout and stderr
         p.retrieve_text_from_pdf()
         p.create_doc_from_text()
+
+        e = time.perf_counter()
+
+        # Create a suffix to show the remaining time and the current program
+        remaining_time = utils.calculate_remaining_processing_time(i, len(_programs), e - s)
+        remaining_time = str(td(seconds=remaining_time))
+        suffix = f"{remaining_time} remaining -- {p}"
+
+        utils.progress(i + 1, len(_programs), suffix)
 
     # Change variable to true to indicate that all programs have been processed
     # This enables the user to call the get_programs() api
