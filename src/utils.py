@@ -32,8 +32,6 @@ def progress(count: int, total: int, suffix: object | str = None):
 
     """
 
-    # TODO: until the progress bar is finished silence and collect the stdout.
-
     # Quickly check if the arguments are valid.
     assert isinstance(count, int), "Count must be an integer."
     assert isinstance(total, int), "Total must be an integer."
