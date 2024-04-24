@@ -69,3 +69,5 @@ Currently, the following tags are supported:
 - Concept: The manifesto is a concept version
 - NotExtractable: The text in the pdf is not extractable (because it is a scanned document, for example)
 - Untrimmed: The program is documented in an enumerable way, but the text is not trimmed (because the first and/or last page is part of another program, for example)
+- Short: The program is a summary of the full program
+- Simple: The program is written in more easily understandable language
