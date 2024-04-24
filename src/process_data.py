@@ -28,12 +28,13 @@ from dataclasses import dataclass, field
 from typing import Callable
 
 import spacy
-from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
+from spacy_syllables import SpacySyllables  # type: ignore # import is necessary for spacy to recognize the pipe
 
 from pypdf import PdfReader
 from spacy.tokens import Doc
 
 from src import utils
+from src.constants import CHARACTERS_PER_PAGES
 
 
 @dataclass(slots=True)
@@ -356,13 +357,12 @@ def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
     """
 
     # Define parameters, these are the parameters that can be tweaked to change the behavior of this function.
-    characters_per_page = 2200
     end_snippet_size = 34
     max_snippet_size = 200
     slogan_occurrence = 0.95
 
     # If the text is shorter than a page, identification of slogans is not possible.
-    if len(text) < characters_per_page:
+    if len(text) < CHARACTERS_PER_PAGES:
         return text
 
     # When functions is not called recursively, start_size is None. In that case, set it to the maximum snippet size.
@@ -371,7 +371,7 @@ def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
 
     # Calculate the number of pages in the text and the number of occurrences of the slogan for
     # it to be considered a slogan.
-    pages = len(text) / characters_per_page
+    pages = len(text) / CHARACTERS_PER_PAGES
     occurrences_for_slogan = pages * slogan_occurrence
 
     # Loop over all possible snippet sizes until optimal size is found.
@@ -419,7 +419,8 @@ def process_all_programs() -> None:
 
     for i, p in enumerate(_programs):
         s = time.perf_counter()
-        # TODO: suppress and collect stdout and stderr
+
+        # Fetch text from pdf and create doc from text
         p.retrieve_text_from_pdf()
         p.create_doc_from_text()
 
