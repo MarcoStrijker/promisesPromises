@@ -7,9 +7,6 @@ Functions:
 
 """
 
-from datetime import timedelta as td
-
-
 _run_times = []
 """List of run times of the programs"""
 
