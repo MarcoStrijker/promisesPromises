@@ -30,18 +30,15 @@ class StdoutCollector:
         # Output: Hello world
     """
 
-    def __init__(self, verbose: bool = False) -> None:
+    def __init__(self) -> None:
         """Initializes the class."""
         self._output = ""
         self._stdout = None
         self._stderr = None
-        self.verbose = verbose
 
     @property
     def has_output(self) -> bool:
         """Returns True if there is output, False otherwise."""
-        if self.verbose:
-            return False
         return bool(self._output)
 
     def write(self, message: str) -> None:
@@ -57,11 +54,10 @@ class StdoutCollector:
 
     def __enter__(self) -> Self:
         """Enters the context manager and sets the standard output to this class."""
-        if not self.verbose:
-            self._stdout = sys.stdout
-            self._stderr = sys.stderr
-            sys.stdout = self
-            sys.stderr = self
+        self._stdout = sys.stdout
+        self._stderr = sys.stderr
+        sys.stdout = self
+        sys.stderr = self
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
@@ -72,9 +68,6 @@ class StdoutCollector:
             exc_val: The exception value.
             exc_tb: The exception traceback.
         """
-        if self.verbose:
-            return
-
         sys.stdout = self._stdout
         sys.stderr = self._stderr
 

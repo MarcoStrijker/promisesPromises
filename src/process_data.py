@@ -425,7 +425,7 @@ def process_all_programs() -> None:
     # Randomize the order of the programs to prevent the same program from being processed first every time
     _programs = random.sample(_programs, len(_programs))
 
-    collector = StdoutCollector(verbose=VERBOSE)
+    collector = StdoutCollector()
     remaining_time = None
 
     for i, p in enumerate(_programs):
@@ -452,7 +452,8 @@ def process_all_programs() -> None:
             utils.progress(i + 1, len(_programs), suffix)
 
     # Print postponed output
-    if collector.has_output:
+    if VERBOSE and collector.has_output:
+        print("\nCollected output:")
         collector.print_output()
 
     # Change variable to true to indicate that all programs have been processed
