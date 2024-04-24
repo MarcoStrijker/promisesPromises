@@ -286,6 +286,16 @@
             </div>
         
 
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#joined_issue" class="internal-link" title="process_data.Program.joined_issue">joined<wbr></wbr>_issue</a></code>
+            </div>
+        
+
     </li>
 </ul> 
 
@@ -310,6 +320,16 @@
         <ul>
     
     <li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="process_data.Issuer.html" class="internal-link" title="process_data.Issuer"><wbr></wbr>Issuer</a></code>
+            </div>
+        
+
+    </li><li class="">
         
         
         
@@ -680,17 +700,17 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Program</span>: <a href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L41" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="process_data.Program.__init__">Program(election_type, party, election_date, tags, path)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">Program</span>: <a href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L109" class="sourceLink">(source)</a></code></p><p>Constructor: <code><a href="#__init__" class="internal-link" title="process_data.Program.__init__">Program(election_type, party, election_date, tags, path)</a></code></p>
           <p><a href="classIndex.html#process_data.Program">View In Hierarchy</a></p>
         </div>
 
         <div class="moduleDocstring">
-          <div><p>A class to store and manipulate data. The class contains methods to retrieve the text from the pdf, create a spacy
-doc from the text and save the text and doc to a file.</p></div>
+          <div><p>A class to store and manipulate data. The class contains methods to retrieve the text from the pdf,
+create a spacy doc from the text and save the text and doc to a file.</p></div>
         </div>
 
         <div id="splitTables">
-          <table class="children sortable" id="id2">
+          <table class="children sortable" id="id3">
   
   
   <tr class="method">
@@ -753,6 +773,11 @@ doc from the text and save the text and doc to a file.</p></div>
     <td>Instance Variable</td>
     <td><code><a href="#text" class="internal-link" title="process_data.Program.text">text</a></code></td>
     <td>The raw text of the program (Default: None).</td>
+  </tr><tr class="property">
+    
+    <td>Property</td>
+    <td><code><a href="#joined_issue" class="internal-link" title="process_data.Program.joined_issue">joined<wbr></wbr>_issue</a></code></td>
+    <td>Returns True if the program is a joined program, False otherwise.</td>
   </tr>
 </table>
           
@@ -774,7 +799,7 @@ doc from the text and save the text and doc to a file.</p></div>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">__init__</span><span class="function-signature">(self, election_type: <code>str</code>, party: <code>str</code>, election_date: <code>str</code>, tags: <code>list[<wbr></wbr>str]</code>, path: <code>str</code>)</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L60">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L128">
       
       (source)
     </a>
@@ -801,7 +826,7 @@ doc from the text and save the text and doc to a file.</p></div>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">__repr__</span><span class="function-signature">(self)</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L153">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L226">
       
       (source)
     </a>
@@ -828,7 +853,7 @@ doc from the text and save the text and doc to a file.</p></div>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">create_doc_from_text</span><span class="function-signature">(self)</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L123">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L196">
       
       (source)
     </a>
@@ -861,7 +886,7 @@ retrieved from the file. Adds the doc to the program object and saves it to a fi
     
     
     <span class="py-keyword">def</span> <span class="py-defname">reference</span><span class="function-signature">(self, ext: <code>str</code>) -&gt; <code>str</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L77">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L150">
       
       (source)
     </a>
@@ -888,7 +913,7 @@ retrieved from the file. Adds the doc to the program object and saves it to a fi
     
     
     <span class="py-keyword">def</span> <span class="py-defname">retrieve_text_from_pdf</span><span class="function-signature">(self)</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L93">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L166">
       
       (source)
     </a>
@@ -923,7 +948,7 @@ saves it to a file.</p>
     <span class="py-defname">doc</span>: Doc|<blockquote>
 None</blockquote>
  =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L48">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L116">
       
       (source)
     </a>
@@ -950,7 +975,7 @@ None</blockquote>
   <div class="functionHeader">
     
     <span class="py-defname">election_date</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L54">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L122">
       
       (source)
     </a>
@@ -977,7 +1002,7 @@ None</blockquote>
   <div class="functionHeader">
     
     <span class="py-defname">election_type</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L50">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L118">
       
       (source)
     </a>
@@ -1004,7 +1029,7 @@ None</blockquote>
   <div class="functionHeader">
     
     <span class="py-defname">party</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L52">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L120">
       
       (source)
     </a>
@@ -1031,7 +1056,7 @@ None</blockquote>
   <div class="functionHeader">
     
     <span class="py-defname">path</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L58">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L126">
       
       (source)
     </a>
@@ -1058,7 +1083,7 @@ None</blockquote>
   <div class="functionHeader">
     
     <span class="py-defname">tags</span>: <code>list[str]</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L56">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L124">
       
       (source)
     </a>
@@ -1087,7 +1112,7 @@ None</blockquote>
     <span class="py-defname">text</span>: str|<blockquote>
 None</blockquote>
  =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L46">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L114">
       
       (source)
     </a>
@@ -1102,6 +1127,33 @@ None</blockquote>
     <div><p>The raw text of the program (Default: None).</p></div>
     
   </div>
+</div><div class="baseproperty">
+  
+  
+  <a name="process_data.Program.joined_issue">
+    
+  </a>
+  <a name="joined_issue">
+    
+  </a>
+  <div class="functionHeader">
+    @property<br />
+    <span class="py-defname">joined_issue</span>: <code>bool</code> =
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L145">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#joined_issue" title="process_data.Program.joined_issue">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="functionBody">
+    
+    <div><p>Returns True if the program is a joined program, False otherwise.</p></div>
+    
+  </div>
 </div>
         </div>
       
@@ -1114,7 +1166,7 @@ None</blockquote>
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    23.9.1 at 2024-04-24 09:28:52.
+    23.9.1 at 2024-04-24 15:26:06.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 

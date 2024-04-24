@@ -160,6 +160,16 @@
         
 
         
+            <div class="itemName"><code><a href="process_data.Issuer.html" class="internal-link" title="process_data.Issuer"><wbr></wbr>Issuer</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
             <div class="itemName"><code><a href="process_data.PathInfoExtractor.html" class="internal-link" title="process_data.PathInfoExtractor"><wbr></wbr>Path<wbr></wbr>Info<wbr></wbr>Extractor</a></code>
             </div>
         
@@ -525,7 +535,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <a href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py" class="sourceLink">(source)</a>
+          <a href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py" class="sourceLink">(source)</a>
           <p></p>
         </div>
 
@@ -555,6 +565,11 @@ processed yet, an exception will be raised.</p>
   
   
   <tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="process_data.Issuer.html" class="internal-link" title="process_data.Issuer"><wbr></wbr>Issuer</a></code></td>
+    <td>A data class to represent a party or a group of parties.</td>
+  </tr><tr class="class">
     
     <td>Class</td>
     <td><code><a href="process_data.PathInfoExtractor.html" class="internal-link" title="process_data.PathInfoExtractor"><wbr></wbr>Path<wbr></wbr>Info<wbr></wbr>Extractor</a></code></td>
@@ -735,7 +750,7 @@ processed yet, an exception will be raised.</p>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">clean_pdf_text</span><span class="function-signature">(string: <code>str</code>) -&gt; <code>str</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L330">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L403">
       
       (source)
     </a>
@@ -765,7 +780,7 @@ processed yet, an exception will be raised.</p>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">extract_text_pdf</span><span class="function-signature">(path: <code>str</code>) -&gt; <code>str</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L271">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L344">
       
       (source)
     </a>
@@ -792,7 +807,7 @@ processed yet, an exception will be raised.</p>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">get_all_programs</span><span class="function-signature">() -&gt; <code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L456">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L529">
       
       (source)
     </a>
@@ -818,8 +833,8 @@ processed yet, an exception will be raised.</p>
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_programs</span><span class="function-signature">(*, election_type: <code>str|None</code> = None, party: <code>str|None</code> = None, election_date: <code>str|None</code> = None, tags: <code>list[<wbr></wbr>str]|None</code> = None) -&gt; <code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L472">
+    <span class="py-keyword">def</span> <span class="py-defname">get_programs</span><span class="function-signature">(*, election_type: <code>str|None</code> = None, party: <code>str|None</code> = None, election_date: <code>str|None</code> = None, joined_issue: <code>bool</code> = False, tags: <code>list[<wbr></wbr>str]|None</code> = None) -&gt; <code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code></span>:
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L545">
       
       (source)
     </a>
@@ -833,7 +848,7 @@ processed yet, an exception will be raised.</p>
     
     <div><p>Return a list of programs based on the election type, party, election date and tags. If no parameters are given,
 all programs will be returned. If the programs have not been processed yet, or no programs are found, an exception
-will be raised.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The type of the election. (default: {None})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">party:</span><code>str</code></td><td class="fieldArgDesc">The party of the program. (default: {None})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_date:</span><code>str</code></td><td class="fieldArgDesc">The date of the election. (default: {None})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">tags:</span><code>list[str]</code></td><td class="fieldArgDesc">The tags of the program. (default: {None})</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code></td><td class="fieldArgDesc">A list of requested programs.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>RuntimeError</code></td><td>If the programs have not been processed yet.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If no program is found.</td></tr></table></div>
+will be raised.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The type of the election. (default: {None})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">party:</span><code>str</code></td><td class="fieldArgDesc">The party of the program. (default: {None})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_date:</span><code>str</code></td><td class="fieldArgDesc">The date of the election. (default: {None})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">joined<wbr></wbr>_issue:</span><code>bool</code></td><td class="fieldArgDesc">Whether the program is a joined issue. (default: {False})</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">tags:</span><code>list[str]</code></td><td class="fieldArgDesc">The tags of the program. (default: {None})</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code></td><td class="fieldArgDesc">A list of requested programs.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>If any of the parameters are not of the correct type.</td></tr><tr><td class="fieldArgContainer"><code>RuntimeError</code></td><td>If the programs have not been processed yet.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If no program is found.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
@@ -847,8 +862,8 @@ will be raised.</p><table class="fieldTable"><tr class="fieldStart"><td class="f
   <div class="functionHeader">
     
     
-    <span class="py-keyword">def</span> <span class="py-defname">get_specific_program</span><span class="function-signature">(*, election_type: <code>str</code>, party: <code>str</code>, election_date: <code>str</code>, tags: <code>list[<wbr></wbr>str]|None</code> = None) -&gt; <code><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a></code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L523">
+    <span class="py-keyword">def</span> <span class="py-defname">get_specific_program</span><span class="function-signature">(*, election_type: <code>str</code>, party: <code>str</code>, election_date: <code>str</code>, joined_issue: <code>bool</code> = False, tags: <code>list[<wbr></wbr>str]|None</code> = None) -&gt; <code><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a></code></span>:
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L597">
       
       (source)
     </a>
@@ -861,7 +876,7 @@ will be raised.</p><table class="fieldTable"><tr class="fieldStart"><td class="f
   <div class="docstring functionBody">
     
     <div><p>Return a program by election type, party and election date. If no program is found, or the programs have not
-been processed yet, an exception will be raised.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The type of the election.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">party:</span><code>str</code></td><td class="fieldArgDesc">The party of the program.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_date:</span><code>str</code></td><td class="fieldArgDesc">The date of the election.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">tags:</span><code>list[str]</code></td><td class="fieldArgDesc">The tags of the program. (default: {None})</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a></code></td><td class="fieldArgDesc">Program -- The requested program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If no program is found.</td></tr><tr><td class="fieldArgContainer"><code>RuntimeError</code></td><td>If the programs have not been processed yet.</td></tr></table></div>
+been processed yet, an exception will be raised.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_type:</span><code>str</code></td><td class="fieldArgDesc">The type of the election.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">party:</span><code>str</code></td><td class="fieldArgDesc">The party of the program.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">election<wbr></wbr>_date:</span><code>str</code></td><td class="fieldArgDesc">The date of the election.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">joined<wbr></wbr>_issue:</span><code>bool</code></td><td class="fieldArgDesc">Whether the program is a joined issue.</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">tags:</span><code>list[str]</code></td><td class="fieldArgDesc">The tags of the program. (default: {None})</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a></code></td><td class="fieldArgDesc">Program -- The requested program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Raises</td></tr><tr><td class="fieldArgContainer"><code>AssertionError</code></td><td>If any of the parameters are not of the correct type.</td></tr><tr><td class="fieldArgContainer"><code>ValueError</code></td><td>If no program is found.</td></tr><tr><td class="fieldArgContainer"><code>RuntimeError</code></td><td>If the programs have not been processed yet.</td></tr></table></div>
   </div>
 </div><div class="basefunction">
   
@@ -876,7 +891,7 @@ been processed yet, an exception will be raised.</p><table class="fieldTable"><t
     
     
     <span class="py-keyword">def</span> <span class="py-defname">identify_programs</span><span class="function-signature">(target: <code>str</code>) -&gt; <code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L288">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L361">
       
       (source)
     </a>
@@ -904,7 +919,7 @@ election</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldNam
     
     
     <span class="py-keyword">def</span> <span class="py-defname">process_all_programs</span><span class="function-signature">()</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L422">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L496">
       
       (source)
     </a>
@@ -931,7 +946,7 @@ and saving the text and doc to a file.</p></div>
   <div class="functionHeader">
     
     <span class="py-defname">FORCE_REPROCESSING</span>: <code>bool</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L573">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L650">
       
       (source)
     </a>
@@ -959,7 +974,7 @@ If set to true, the text and doc will always be retrieved from the pdf and saved
   <div class="functionHeader">
     
     <span class="py-defname">double_dot_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L590">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L667">
       
       (source)
     </a>
@@ -986,7 +1001,7 @@ If set to true, the text and doc will always be retrieved from the pdf and saved
   <div class="functionHeader">
     
     <span class="py-defname">double_space_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L587">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L664">
       
       (source)
     </a>
@@ -1013,7 +1028,7 @@ If set to true, the text and doc will always be retrieved from the pdf and saved
   <div class="functionHeader">
     
     <span class="py-defname">form_feed_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L604">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L681">
       
       (source)
     </a>
@@ -1040,7 +1055,7 @@ If set to true, the text and doc will always be retrieved from the pdf and saved
   <div class="functionHeader">
     
     <span class="py-defname">hyphenation_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L607">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L684">
       
       (source)
     </a>
@@ -1069,7 +1084,7 @@ removed and the two parts should be joined together.</p></div>
   <div class="functionHeader">
     
     <span class="py-defname">large_numbers_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L600">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L677">
       
       (source)
     </a>
@@ -1097,7 +1112,7 @@ Only matches when digits, spaces and new lines that are 9 characters or longer</
   <div class="functionHeader">
     
     <span class="py-defname">newline_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L584">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L661">
       
       (source)
     </a>
@@ -1124,7 +1139,7 @@ Only matches when digits, spaces and new lines that are 9 characters or longer</
   <div class="functionHeader">
     
     <span class="py-defname">nlp</span>: <code>Language</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L641">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L718">
       
       (source)
     </a>
@@ -1151,7 +1166,7 @@ Only matches when digits, spaces and new lines that are 9 characters or longer</
   <div class="functionHeader">
     
     <span class="py-defname">page_num_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L596">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L673">
       
       (source)
     </a>
@@ -1179,7 +1194,7 @@ and possibly spaces on either side</p></div>
   <div class="functionHeader">
     
     <span class="py-defname">single_char_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L612">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L689">
       
       (source)
     </a>
@@ -1207,7 +1222,7 @@ are surrounded by whitespace or the end of the string</p></div>
   <div class="functionHeader">
     
     <span class="py-defname">single_char_start_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L616">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L693">
       
       (source)
     </a>
@@ -1234,7 +1249,7 @@ are surrounded by whitespace or the end of the string</p></div>
   <div class="functionHeader">
     
     <span class="py-defname">special_char_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L581">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L658">
       
       (source)
     </a>
@@ -1261,7 +1276,7 @@ are surrounded by whitespace or the end of the string</p></div>
   <div class="functionHeader">
     
     <span class="py-defname">tab_pattern</span>: <code>Pattern</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L593">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L670">
       
       (source)
     </a>
@@ -1289,7 +1304,7 @@ are surrounded by whitespace or the end of the string</p></div>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">_remove_repeating_slogans</span><span class="function-signature">(text: <code>str</code>, start_size: <code>int|None</code> = None) -&gt; <code>str</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L358">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L431">
       
       (source)
     </a>
@@ -1318,7 +1333,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_data_path</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L622">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L699">
       
       (source)
     </a>
@@ -1345,7 +1360,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_directory</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L620">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L697">
       
       (source)
     </a>
@@ -1372,7 +1387,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_manifest_path</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L623">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L700">
       
       (source)
     </a>
@@ -1399,7 +1414,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_processed_doc_path</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L626">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L703">
       
       (source)
     </a>
@@ -1426,7 +1441,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_processed_path</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L624">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L701">
       
       (source)
     </a>
@@ -1453,7 +1468,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_processed_text_path</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L625">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L702">
       
       (source)
     </a>
@@ -1480,7 +1495,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_programs</span>: <code>list[<wbr></wbr><a href="process_data.Program.html" class="internal-link" title="process_data.Program">Program</a>]</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L647">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L724">
       
       (source)
     </a>
@@ -1507,7 +1522,7 @@ If it does, it removes all occurrences of it and recursively calls itself to che
   <div class="functionHeader">
     
     <span class="py-defname">_programs_processed</span>: <code>bool</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L637">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L714">
       
       (source)
     </a>
@@ -1535,7 +1550,7 @@ This is necessary to prevent the user from calling the get_programs() api before
   <div class="functionHeader">
     
     <span class="py-defname">_project_root</span>: <code>str</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/ebdce7835ac3d39e336245761691a3cf3c687997/src/process_data.py#L621">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/process_data.py#L698">
       
       (source)
     </a>
@@ -1562,7 +1577,7 @@ This is necessary to prevent the user from calling the get_programs() api before
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    23.9.1 at 2024-04-24 09:28:52.
+    23.9.1 at 2024-04-24 15:26:06.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 
