@@ -23,6 +23,7 @@ import re
 import time
 
 from datetime import timedelta as td
+from dataclasses import dataclass, field
 from collections import Counter
 from re import Pattern
 from typing import Callable
@@ -35,7 +36,74 @@ from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary
 from pypdf import PdfReader
 
 from src import utils
-from src.models import Issuer
+
+
+@dataclass(slots=True)
+class Issuer:
+    """A data class to represent a party or a group of parties."""
+    name: str
+    joined: bool = field(default=False, init=False)
+    members: set[str] = field(default_factory=set, init=False)
+
+    def __post_init__(self):
+        """Post-initialization function to split the party name into members."""
+        self.joined = "+" in self.name
+        self.members = set(self.name.split("+"))
+
+    def __eq__(self, other: object) -> bool:
+        """Equality function to compare the Issuer object with another object.
+
+        Args:
+            other (object): The object to compare with.
+
+        Returns:
+            bool: True if the objects are equal, False otherwise.
+        """
+
+        # When searching for a string in the members of the issuer.
+        if isinstance(other, str):
+            return other in self.members
+
+        # When comparing two Issuer objects.
+        if isinstance(other, Issuer):
+            return set(self.members) == set(other.members)
+
+        raise TypeError(f"Cannot compare Issuer with {type(other)}")
+
+    def __contains__(self, item: str) -> bool:
+        """Contains function to check if an item is in the Issuer object.
+
+        Args:
+            item (str): The item to check.
+
+        Returns:
+            bool: True if the item is in the object, False otherwise.
+        """
+        return item in self.members
+
+    def __hash__(self) -> int:
+        """Hash function to hash the Issuer object.
+
+        Returns:
+            int: The hash value of the object.
+        """
+        return hash(self.name)
+
+    def __str__(self) -> str:
+        """String representation of the Issuer object.
+
+        Returns:
+            str: The string representation of the object.
+        """
+        return self.name
+
+    def __repr__(self) -> str:
+        """Representation of the Issuer object.
+
+        Returns:
+            str: The representation of the object.
+        """
+        return self.name
 
 
 class Program:
