@@ -151,8 +151,21 @@
         
          
 
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
         
         
+        
+
+        
+            <div class="itemName"><code><a href="utils.StdoutCollector.html" class="internal-link" title="utils.StdoutCollector"><wbr></wbr>Stdout<wbr></wbr>Collector</a></code>
+            </div>
+        
+
+    </li>
+</ul>
 
         <div class="childrenKindTitle">Functions</div>
         <ul>
@@ -164,6 +177,16 @@
 
         
             <div class="itemName"><code><a href="#calculate_remaining_processing_time" class="internal-link" title="utils.calculate_remaining_processing_time">calculate<wbr></wbr>_remaining<wbr></wbr>_processing<wbr></wbr>_time</a></code>
+            </div>
+        
+
+    </li><li class="">
+        
+        
+        
+
+        
+            <div class="itemName"><code><a href="#get_pdf_files_recursive" class="internal-link" title="utils.get_pdf_files_recursive">get<wbr></wbr>_pdf<wbr></wbr>_files<wbr></wbr>_recursive</a></code>
             </div>
         
 
@@ -232,7 +255,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <a href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/utils.py" class="sourceLink">(source)</a>
+          <a href="https://github.com/MarcoStrijker/promisesPromises/tree/df6ba6d97f9b6458255b7db59a0fd5404f6259ad/src/utils.py" class="sourceLink">(source)</a>
           <p></p>
         </div>
 
@@ -253,11 +276,21 @@
           <table class="children sortable" id="id5">
   
   
-  <tr class="function">
+  <tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="utils.StdoutCollector.html" class="internal-link" title="utils.StdoutCollector"><wbr></wbr>Stdout<wbr></wbr>Collector</a></code></td>
+    <td>A class that can collect the output of the standard output and standard error.</td>
+  </tr><tr class="function">
     
     <td>Function</td>
     <td><code><a href="#calculate_remaining_processing_time" class="internal-link" title="utils.calculate_remaining_processing_time">calculate<wbr></wbr>_remaining<wbr></wbr>_processing<wbr></wbr>_time</a></code></td>
     <td>Calculates the remaining processing time for the remaining programs.</td>
+  </tr><tr class="function">
+    
+    <td>Function</td>
+    <td><code><a href="#get_pdf_files_recursive" class="internal-link" title="utils.get_pdf_files_recursive">get<wbr></wbr>_pdf<wbr></wbr>_files<wbr></wbr>_recursive</a></code></td>
+    <td>Get all pdf files recursively from a target directory.</td>
   </tr><tr class="function">
     
     <td>Function</td>
@@ -289,7 +322,7 @@
     
     
     <span class="py-keyword">def</span> <span class="py-defname">calculate_remaining_processing_time</span><span class="function-signature">(current: <code>int</code>, total: <code>int</code>, run_time: <code>int|float</code>) -&gt; <code>int</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/utils.py#L69">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/df6ba6d97f9b6458255b7db59a0fd5404f6259ad/src/utils.py#L149">
       
       (source)
     </a>
@@ -308,6 +341,33 @@ float</blockquote>
 </div><div class="basefunction">
   
   
+  <a name="utils.get_pdf_files_recursive">
+    
+  </a>
+  <a name="get_pdf_files_recursive">
+    
+  </a>
+  <div class="functionHeader">
+    
+    
+    <span class="py-keyword">def</span> <span class="py-defname">get_pdf_files_recursive</span><span class="function-signature">(target: <code>str</code>) -&gt; <code>set[<wbr></wbr>str]</code></span>:
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/df6ba6d97f9b6458255b7db59a0fd5404f6259ad/src/utils.py#L75">
+      
+      (source)
+    </a>
+    <a class="headerLink" href="#get_pdf_files_recursive" title="utils.get_pdf_files_recursive">
+      
+      
+      ¶
+    </a>
+  </div>
+  <div class="docstring functionBody">
+    
+    <div><p>Get all pdf files recursively from a target directory.</p><table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">target:</span><code>str</code></td><td class="fieldArgDesc">The target directory.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>set</code></td><td class="fieldArgDesc">A set of file locations.</td></tr></table></div>
+  </div>
+</div><div class="basefunction">
+  
+  
   <a name="utils.progress">
     
   </a>
@@ -318,7 +378,7 @@ float</blockquote>
     
     
     <span class="py-keyword">def</span> <span class="py-defname">progress</span><span class="function-signature">(count: <code>int</code>, total: <code>int</code>, suffix: <code>object|str</code> = None)</span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/utils.py#L17">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/df6ba6d97f9b6458255b7db59a0fd5404f6259ad/src/utils.py#L97">
       
       (source)
     </a>
@@ -349,7 +409,7 @@ None</blockquote>
   <div class="functionHeader">
     
     <span class="py-defname">_run_times</span>: <code>list</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/e17f66f3ef8c0c5205c34fe3f708e49b1346cd35/src/utils.py#L13">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/df6ba6d97f9b6458255b7db59a0fd5404f6259ad/src/utils.py#L13">
       
       (source)
     </a>
@@ -376,7 +436,7 @@ None</blockquote>
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    23.9.1 at 2024-04-24 15:26:06.
+    23.9.1 at 2024-04-27 08:04:55.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 
