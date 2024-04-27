@@ -22,7 +22,10 @@ import random
 import re
 import time
 
+from datetime import timedelta as td
+from dataclasses import dataclass, field
 from collections import Counter
+from datetime import timedelta as td
 from re import Pattern
 from typing import Callable
 
@@ -34,12 +37,81 @@ from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary
 from pypdf import PdfReader
 
 from src import utils
+from src.utils import StdoutCollector
+
+
+@dataclass(slots=True)
+class Issuer:
+    """A data class to represent a party or a group of parties."""
+    name: str
+    joined: bool = field(default=False, init=False)
+    members: set[str] = field(default_factory=set, init=False)
+
+    def __post_init__(self):
+        """Post-initialization function to split the party name into members."""
+        self.joined = "+" in self.name
+        self.members = set(self.name.split("+"))
+
+    def __eq__(self, other: object) -> bool:
+        """Equality function to compare the Issuer object with another object.
+
+        Args:
+            other (object): The object to compare with.
+
+        Returns:
+            bool: True if the objects are equal, False otherwise.
+        """
+
+        # When searching for a string in the members of the issuer.
+        if isinstance(other, str):
+            return other in self.members
+
+        # When comparing two Issuer objects.
+        if isinstance(other, Issuer):
+            return set(self.members) == set(other.members)
+
+        raise TypeError(f"Cannot compare Issuer with {type(other)}")
+
+    def __contains__(self, item: str) -> bool:
+        """Contains function to check if an item is in the Issuer object.
+
+        Args:
+            item (str): The item to check.
+
+        Returns:
+            bool: True if the item is in the object, False otherwise.
+        """
+        return item in self.members
+
+    def __hash__(self) -> int:
+        """Hash function to hash the Issuer object.
+
+        Returns:
+            int: The hash value of the object.
+        """
+        return hash(self.name)
+
+    def __str__(self) -> str:
+        """String representation of the Issuer object.
+
+        Returns:
+            str: The string representation of the object.
+        """
+        return self.name
+
+    def __repr__(self) -> str:
+        """Representation of the Issuer object.
+
+        Returns:
+            str: The representation of the object.
+        """
+        return self.name
 
 
 class Program:
     """
-    A class to store and manipulate data. The class contains methods to retrieve the text from the pdf, create a spacy
-    doc from the text and save the text and doc to a file.
+    A class to store and manipulate data. The class contains methods to retrieve the text from the pdf,
+    create a spacy doc from the text and save the text and doc to a file.
 
     Attributes:
         text (str | None): The raw text of the program (Default: None).
@@ -67,10 +139,15 @@ class Program:
 
         """
         self.election_type = election_type
-        self.party = party
+        self.party = Issuer(party)
         self.election_date = election_date
         self.tags = tags
         self.path = path
+
+    @property
+    def joined_issue(self) -> bool:
+        """Returns True if the program is a joined program, False otherwise."""
+        return self.party.joined
 
     def reference(self, ext: str) -> str:
         """Return a reference to the file, including the party and election.
@@ -100,7 +177,7 @@ class Program:
         if self.text is not None:
             return
 
-        # Retrieve text from file if it exists
+        # Retrieve text from the file if it exists
         path = os.path.join(_processed_text_path, self.reference("txt"))
         if os.path.exists(path) and not FORCE_REPROCESSING:
             with open(path, "r", encoding='utf-8') as f:
@@ -229,9 +306,9 @@ class PathInfoExtractor:
         tags = [tag.removeprefix("#") for tag in re.findall(r"#\w+", filename)]
 
         # Remove the hashtags from the filename
-        filename = re.sub(r"\s*#\w+\s*", "", filename)
+        name = re.sub(r"\s*#\w+\s*", "", filename)
 
-        return filename, tags
+        return name, tags
 
     @staticmethod
     def extractor_type_date_party_tags(path: str) -> dict[str, str]:
@@ -256,9 +333,9 @@ class PathInfoExtractor:
         filename, election_date, election_type = split_path[-1], split_path[-2], split_path[-3]
 
         # Extract the tags from the filename
-        filename, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(filename)
+        name, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(filename)
 
-        return {"election_type": election_type, "election_date": election_date, "party": filename, "tags": tags}
+        return {"election_type": election_type, "election_date": election_date, "party": name, "tags": tags}
 
     EXTRACTOR_REFERENCE = {
         "TK": extractor_type_date_party_tags
@@ -294,33 +371,26 @@ def identify_programs(target: str) -> list[Program]:
         A list of programs.
     """
     found_programs = []
-    for root, _, files in os.walk(target):
-        for file in files:
 
-            # Manifest are only pdf files
-            if not file.endswith(".pdf"):
-                continue
 
-            # Compose full path to file
-            file_path = os.path.join(root, file)
+    for file in utils.get_pdf_files_recursive(target):
+        # Retrieve election type from path
+        # This is used to determine which and how the path should be parsed
+        election_type_abbrev = PathInfoExtractor.get_election_type(file)
 
-            # Retrieve election type from path
-            # This is used to determine which and how the path should be parsed
-            election_type_abbrev = PathInfoExtractor.get_election_type(file_path)
+        if election_type_abbrev not in PathInfoExtractor.EXTRACTOR_REFERENCE:
+            raise NotImplementedError(f"Unknown election type: {election_type_abbrev}. "
+                                      f"Election type not implemented in PathInfoExtractor.extractor_reference."
+                                      f"Currently unknown how to convert manifest path to program info. See"
+                                      f"PathInfoExtractor docstring for more information.")
 
-            if election_type_abbrev not in PathInfoExtractor.EXTRACTOR_REFERENCE:
-                raise NotImplementedError(f"Unknown election type: {election_type_abbrev}. "
-                                          f"Election type not implemented in PathInfoExtractor.extractor_reference."
-                                          f"Currently unknown how to convert manifest path to program info. See"
-                                          f"PathInfoExtractor docstring for more information.")
+        extractor = PathInfoExtractor.EXTRACTOR_REFERENCE[election_type_abbrev]
 
-            extractor = PathInfoExtractor.EXTRACTOR_REFERENCE[election_type_abbrev]
+        # Extract the info from the path
+        info = extractor(file)
 
-            # Extract the info from the path
-            info = extractor(file_path)
-
-            # Add program to list
-            found_programs.append(Program(**info, path=file_path))
+        # Add program to list
+        found_programs.append(Program(**info, path=file))
 
     return found_programs
 
@@ -423,27 +493,43 @@ def process_all_programs() -> None:
     and saving the text and doc to a file.
 
     """
-    global programs_processed, _programs
+    global _programs_processed, _programs
 
     print(f"Will process {len(_programs)} programs")
 
     # Randomize the order of the programs to prevent the same program from being processed first every time
     _programs = random.sample(_programs, len(_programs))
 
+    collector = StdoutCollector()
+    remaining_time = None
+
     for i, p in enumerate(_programs):
+        # Show the remaining time if it is not the first or last program
+        suffix = f"{remaining_time} remaining -- {p}" if remaining_time else p
+
+        utils.progress(i, len(_programs), suffix)
         s = time.perf_counter()
-        # TODO: suppress and collect stdout and stderr
-        p.retrieve_text_from_pdf()
-        p.create_doc_from_text()
+
+        # Catch any output from the program
+        # to prevent the progress bar from being overwritten
+        with collector:
+            p.retrieve_text_from_pdf()
+            p.create_doc_from_text()
 
         e = time.perf_counter()
 
         # Create a suffix to show the remaining time and the current program
         remaining_time = utils.calculate_remaining_processing_time(i, len(_programs), e - s)
         remaining_time = str(td(seconds=remaining_time))
-        suffix = f"{remaining_time} remaining -- {p}"
 
-        utils.progress(i + 1, len(_programs), suffix)
+        if i == len(_programs) - 1:
+            suffix = "Finished"
+            utils.progress(i + 1, len(_programs), suffix)
+
+    # Print postponed output
+    if VERBOSE and collector.has_output:
+        print("\nCollected output:")
+        collector.print_output()
 
     # Change variable to true to indicate that all programs have been processed
     # This enables the user to call the get_programs() api
@@ -468,7 +554,8 @@ def get_all_programs() -> list[Program]:
 
 
 def get_programs(*, election_type: str | None = None, party: str | None = None,
-                 election_date: str | None = None, tags: list[str] | None = None) -> list[Program]:
+                 election_date: str | None = None, joined_issue: bool = False,
+                 tags: list[str] | None = None) -> list[Program]:
     """Return a list of programs based on the election type, party, election date and tags. If no parameters are given,
     all programs will be returned. If the programs have not been processed yet, or no programs are found, an exception
     will be raised.
@@ -477,12 +564,14 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
         election_type (str): The type of the election. (default: {None})
         party (str): The party of the program. (default: {None})
         election_date (str): The date of the election. (default: {None})
+        joined_issue (bool): Whether the program is a joined issue. (default: {False})
         tags (list[str]): The tags of the program. (default: {None})
 
     Returns:
         A list of requested programs.
 
     Raises:
+        AssertionError: If any of the parameters are not of the correct type.
         RuntimeError: If the programs have not been processed yet.
         ValueError: If no program is found.
     """
@@ -491,6 +580,7 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
     assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
     assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+    assert isinstance(joined_issue, bool), "Joined issue must be a boolean."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     # Raise if programs have not been processed yet
@@ -498,15 +588,12 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
                            " before calling this function.")
 
-    # Return all programs if no parameters are given
-    if election_type is None and party is None and election_date is None and tags is None:
-        return _programs
-
     # Loop over all programs and find the programs that match the given parameters
     found_programs = [p for p in _programs
                       if (election_type is None or p.election_type == election_type)
                       and (party is None or p.party == party)
                       and (election_date is None or p.election_date == election_date)
+                      and p.joined_issue == joined_issue
                       and (tags is None or all(tag in p.tags for tag in tags))]
 
     # Return found programs if any are found
@@ -518,7 +605,7 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
                      f" party: {party}, election date: {election_date}")
 
 
-def get_specific_program(*, election_type: str, party: str, election_date: str,
+def get_specific_program(*, election_type: str, party: str, election_date: str, joined_issue: bool = False,
                          tags: list[str] | None = None) -> Program:
     """Return a program by election type, party and election date. If no program is found, or the programs have not
     been processed yet, an exception will be raised.
@@ -529,12 +616,14 @@ def get_specific_program(*, election_type: str, party: str, election_date: str,
         election_date (str): The date of the election.
 
     Keyword Arguments:
+        joined_issue (bool): Whether the program is a joined issue.
         tags (list[str]): The tags of the program. (default: {None})
 
     Returns:
         Program -- The requested program.
 
     Raises:
+        AssertionError: If any of the parameters are not of the correct type.
         ValueError: If no program is found.
         RuntimeError: If the programs have not been processed yet.
     """
@@ -543,18 +632,19 @@ def get_specific_program(*, election_type: str, party: str, election_date: str,
     assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
     assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+    assert isinstance(joined_issue, bool), "Joined issue must be a boolean."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     if not _programs_processed:
         raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
                            " before calling this function.")
 
-    properties = (election_type, party, election_date)
+    properties = (election_type, party, election_date, joined_issue)
 
     # Find program
     for p in _programs:
         # Check if program matches properties
-        if (p.election_type, p.party, p.election_date) != properties:
+        if (p.election_type, p.party, p.election_date, p.joined_issue) != properties:
             continue
 
         # Check if program has all tags
@@ -571,6 +661,9 @@ def get_specific_program(*, election_type: str, party: str, election_date: str,
 FORCE_REPROCESSING = False
 """For debugging purposes, set to true to force (re)processing of all programs.
 If set to true, the text and doc will always be retrieved from the pdf and saved to a file."""
+
+VERBOSE = False
+"""Set to true to enable verbose output. This will print the output of the program to the console."""
 
 # Define regex patterns to clean the parsed text from a pdf file
 # TODO: Add more special characters

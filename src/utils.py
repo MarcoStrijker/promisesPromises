@@ -6,12 +6,92 @@ Functions:
   - calculate_remaining_processing_time: Calculates the remaining processing time for the remaining programs.
 
 """
-
-from datetime import timedelta as td
-
+import os
+import sys
+from typing import Self
 
 _run_times = []
 """List of run times of the programs"""
+
+
+class StdoutCollector:
+    """
+    A class that can collect the output of the standard output and standard error.
+
+    Can be run with verbose mode, which will not collect the output. This is useful for testing.
+
+    Example:
+        collector = StdoutCollector()
+
+        with collector:
+            print("Hello world")
+
+        collector.print_output()
+        # Output: Hello world
+    """
+
+    def __init__(self) -> None:
+        """Initializes the class."""
+        self._output = ""
+        self._stdout = None
+        self._stderr = None
+
+    @property
+    def has_output(self) -> bool:
+        """Returns True if there is output, False otherwise."""
+        return bool(self._output)
+
+    def write(self, message: str) -> None:
+        """Represents the write method of the standard output."""
+        self._output += message
+
+    def flush(self) -> None:
+        """Represents the flush method of the standard output."""
+
+    def print_output(self) -> None:
+        """Prints the collected output."""
+        print(self._output)
+
+    def __enter__(self) -> Self:
+        """Enters the context manager and sets the standard output to this class."""
+        self._stdout = sys.stdout
+        self._stderr = sys.stderr
+        sys.stdout = self
+        sys.stderr = self
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+        """Exits the context manager and sets the standard output back to the original.
+
+        Args:
+            exc_type: The type of the exception.
+            exc_val: The exception value.
+            exc_tb: The exception traceback.
+        """
+        sys.stdout = self._stdout
+        sys.stderr = self._stderr
+
+
+def get_pdf_files_recursive(target: str) -> set[str]:
+    """Get all pdf files recursively from a target directory.
+
+    Args:
+        target (str): The target directory.
+
+    Returns:
+        set: A set of file locations.
+    """
+    file_locations = set()
+    for root, _, files in os.walk(target):
+        for file in files:
+            # Manifest are only pdf files
+            if not file.endswith(".pdf"):
+                continue
+
+            # Compose full path to file
+            file_locations.add(os.path.join(root, file))
+
+    return file_locations
 
 
 def progress(count: int, total: int, suffix: object | str = None):
