@@ -25,6 +25,7 @@ import time
 from datetime import timedelta as td
 from dataclasses import dataclass, field
 from collections import Counter
+from datetime import timedelta as td
 from re import Pattern
 from typing import Callable
 
@@ -36,6 +37,7 @@ from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary
 from pypdf import PdfReader
 
 from src import utils
+from src.utils import StdoutCollector
 
 
 @dataclass(slots=True)
@@ -369,33 +371,26 @@ def identify_programs(target: str) -> list[Program]:
         A list of programs.
     """
     found_programs = []
-    for root, _, files in os.walk(target):
-        for file in files:
 
-            # Manifest are only pdf files
-            if not file.endswith(".pdf"):
-                continue
 
-            # Compose full path to file
-            file_path = os.path.join(root, file)
+    for file in utils.get_pdf_files_recursive(target):
+        # Retrieve election type from path
+        # This is used to determine which and how the path should be parsed
+        election_type_abbrev = PathInfoExtractor.get_election_type(file)
 
-            # Retrieve election type from path
-            # This is used to determine which and how the path should be parsed
-            election_type_abbrev = PathInfoExtractor.get_election_type(file_path)
+        if election_type_abbrev not in PathInfoExtractor.EXTRACTOR_REFERENCE:
+            raise NotImplementedError(f"Unknown election type: {election_type_abbrev}. "
+                                      f"Election type not implemented in PathInfoExtractor.extractor_reference."
+                                      f"Currently unknown how to convert manifest path to program info. See"
+                                      f"PathInfoExtractor docstring for more information.")
 
-            if election_type_abbrev not in PathInfoExtractor.EXTRACTOR_REFERENCE:
-                raise NotImplementedError(f"Unknown election type: {election_type_abbrev}. "
-                                          f"Election type not implemented in PathInfoExtractor.extractor_reference."
-                                          f"Currently unknown how to convert manifest path to program info. See"
-                                          f"PathInfoExtractor docstring for more information.")
+        extractor = PathInfoExtractor.EXTRACTOR_REFERENCE[election_type_abbrev]
 
-            extractor = PathInfoExtractor.EXTRACTOR_REFERENCE[election_type_abbrev]
+        # Extract the info from the path
+        info = extractor(file)
 
-            # Extract the info from the path
-            info = extractor(file_path)
-
-            # Add program to list
-            found_programs.append(Program(**info, path=file_path))
+        # Add program to list
+        found_programs.append(Program(**info, path=file))
 
     return found_programs
 
@@ -505,20 +500,36 @@ def process_all_programs() -> None:
     # Randomize the order of the programs to prevent the same program from being processed first every time
     _programs = random.sample(_programs, len(_programs))
 
+    collector = StdoutCollector()
+    remaining_time = None
+
     for i, p in enumerate(_programs):
+        # Show the remaining time if it is not the first or last program
+        suffix = f"{remaining_time} remaining -- {p}" if remaining_time else p
+
+        utils.progress(i, len(_programs), suffix)
         s = time.perf_counter()
-        # TODO: suppress and collect stdout and stderr
-        p.retrieve_text_from_pdf()
-        p.create_doc_from_text()
+
+        # Catch any output from the program
+        # to prevent the progress bar from being overwritten
+        with collector:
+            p.retrieve_text_from_pdf()
+            p.create_doc_from_text()
 
         e = time.perf_counter()
 
         # Create a suffix to show the remaining time and the current program
         remaining_time = utils.calculate_remaining_processing_time(i, len(_programs), e - s)
         remaining_time = str(td(seconds=remaining_time))
-        suffix = f"{remaining_time} remaining -- {p}"
 
-        utils.progress(i + 1, len(_programs), suffix)
+        if i == len(_programs) - 1:
+            suffix = "Finished"
+            utils.progress(i + 1, len(_programs), suffix)
+
+    # Print postponed output
+    if VERBOSE and collector.has_output:
+        print("\nCollected output:")
+        collector.print_output()
 
     # Change variable to true to indicate that all programs have been processed
     # This enables the user to call the get_programs() api
@@ -650,6 +661,9 @@ def get_specific_program(*, election_type: str, party: str, election_date: str, 
 FORCE_REPROCESSING = False
 """For debugging purposes, set to true to force (re)processing of all programs.
 If set to true, the text and doc will always be retrieved from the pdf and saved to a file."""
+
+VERBOSE = False
+"""Set to true to enable verbose output. This will print the output of the program to the console."""
 
 # Define regex patterns to clean the parsed text from a pdf file
 # TODO: Add more special characters
