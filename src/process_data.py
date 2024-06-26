@@ -22,17 +22,16 @@ import random
 import re
 import time
 
-from datetime import timedelta as td
 from dataclasses import dataclass, field
 from collections import Counter
 from datetime import timedelta as td
 from re import Pattern
-from typing import Callable
+from typing import Callable, TypedDict
 
 import spacy
 from spacy import Language
 from spacy.tokens import Doc
-from spacy_syllables import SpacySyllables  # type: ignore  #import is necessary for spacy to recognize the pipe
+from spacy_syllables import SpacySyllables  # import is necessary for spacy to recognize the pipe
 
 from pypdf import PdfReader
 
@@ -256,7 +255,15 @@ class PathInfoExtractor:
 
     """
 
-    EXTRACTOR_REFERENCE: dict[str, Callable[[str], dict[str, str]]]
+    class ExtractionInfo(TypedDict):
+        """A type hint for the extraction info."""
+        election_type: str
+        election_date: str
+        party: str
+        tags: list[str]
+
+    EXTRACTOR_REFERENCE: dict[str, Callable[[str], ExtractionInfo]]
+    """Reference to the methods to extract the information from the path for each election type"""
 
     @staticmethod
     def get_election_type(path: str) -> str:
@@ -311,7 +318,7 @@ class PathInfoExtractor:
         return name, tags
 
     @staticmethod
-    def extractor_type_date_party_tags(path: str) -> dict[str, str]:
+    def extractor_type_date_party_tags(path: str) -> ExtractionInfo:
         """Extract the election type, election date and party from the path.
 
         The path should be in the following format:
@@ -371,7 +378,6 @@ def identify_programs(target: str) -> list[Program]:
         A list of programs.
     """
     found_programs = []
-
 
     for file in utils.get_pdf_files_recursive(target):
         # Retrieve election type from path
@@ -505,7 +511,7 @@ def process_all_programs() -> None:
 
     for i, p in enumerate(_programs):
         # Show the remaining time if it is not the first or last program
-        suffix = f"{remaining_time} remaining -- {p}" if remaining_time else p
+        suffix = f"{remaining_time} remaining -- {p}" if remaining_time else str(p)
 
         utils.progress(i, len(_programs), suffix)
         s = time.perf_counter()

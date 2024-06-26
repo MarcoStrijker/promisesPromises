@@ -8,7 +8,7 @@ Functions:
 """
 import os
 import sys
-from typing import Self
+from typing import Self, TextIO
 
 _run_times = []
 """List of run times of the programs"""
@@ -33,8 +33,8 @@ class StdoutCollector:
     def __init__(self) -> None:
         """Initializes the class."""
         self._output = ""
-        self._stdout = None
-        self._stderr = None
+        self._stdout: TextIO | None = None
+        self._stderr: TextIO | None = None
 
     @property
     def has_output(self) -> bool:
@@ -56,8 +56,8 @@ class StdoutCollector:
         """Enters the context manager and sets the standard output to this class."""
         self._stdout = sys.stdout
         self._stderr = sys.stderr
-        sys.stdout = self
-        sys.stderr = self
+        sys.stdout = self  # type: ignore
+        sys.stderr = self  # type: ignore
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
@@ -68,8 +68,8 @@ class StdoutCollector:
             exc_val: The exception value.
             exc_tb: The exception traceback.
         """
-        sys.stdout = self._stdout
-        sys.stderr = self._stderr
+        sys.stdout = self._stdout  # type: ignore
+        sys.stderr = self._stderr  # type: ignore
 
 
 def get_pdf_files_recursive(target: str) -> set[str]:
@@ -157,8 +157,6 @@ def calculate_remaining_processing_time(current: int, total: int, run_time: int 
     Returns:
         The remaining processing time in seconds.
     """
-    global _run_times
-
     # Add last run time to global list
     _run_times.append(run_time)
 
