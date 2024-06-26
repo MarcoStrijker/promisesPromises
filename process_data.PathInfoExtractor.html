@@ -151,8 +151,21 @@
         
          
 
+        <div class="childrenKindTitle">Classes</div>
+        <ul>
+    
+    <li class="">
         
         
+        
+
+        
+            <div class="itemName"><code><a href="process_data.PathInfoExtractor.ExtractionInfo.html" class="internal-link" title="process_data.PathInfoExtractor.ExtractionInfo"><wbr></wbr>Extraction<wbr></wbr>Info</a></code>
+            </div>
+        
+
+    </li>
+</ul>
 
         <div class="childrenKindTitle">Methods</div>
         <ul>
@@ -620,7 +633,7 @@
         </div>
 
         <div class="extrasDocstring">
-          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">PathInfoExtractor</span>: <a href="https://github.com/MarcoStrijker/promisesPromises/tree/1a37c0c4ecf60c179d5a36e6a1b221105d2a60dc/src/process_data.py#L238" class="sourceLink">(source)</a></code></p>
+          <p class="class-signature"><code><span class="py-keyword">class</span> <span class="py-defname">PathInfoExtractor</span>: <a href="https://github.com/MarcoStrijker/promisesPromises/tree/bf2b2583e7eaf542d0492f5a9bd271876c47b650/src/process_data.py#L237" class="sourceLink">(source)</a></code></p>
           <p><a href="classIndex.html#process_data.PathInfoExtractor">View In Hierarchy</a></p>
         </div>
 
@@ -647,7 +660,12 @@ extractor for the election type.</p>
           <table class="children sortable" id="id4">
   
   
-  <tr class="staticmethod">
+  <tr class="class">
+    
+    <td>Class</td>
+    <td><code><a href="process_data.PathInfoExtractor.ExtractionInfo.html" class="internal-link" title="process_data.PathInfoExtractor.ExtractionInfo"><wbr></wbr>Extraction<wbr></wbr>Info</a></code></td>
+    <td>A type hint for the extraction info.</td>
+  </tr><tr class="staticmethod">
     
     <td>Static Method</td>
     <td><code><a href="#extract_tags_and_remove_tags_from_filename" class="internal-link" title="process_data.PathInfoExtractor.extract_tags_and_remove_tags_from_filename">extract<wbr></wbr>_tags<wbr></wbr>_and<wbr></wbr>_remove<wbr></wbr>_tags<wbr></wbr>_from<wbr></wbr>_filename</a></code></td>
@@ -688,7 +706,7 @@ extractor for the election type.</p>
     
     @staticmethod<br />
     <span class="py-keyword">def</span> <span class="py-defname">extract_tags_and_remove_tags_from_filename</span><span class="function-signature">(filename: <code>str</code>) -&gt; <code>tuple[<wbr></wbr>str, <wbr></wbr>list[<wbr></wbr>str]]</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/1a37c0c4ecf60c179d5a36e6a1b221105d2a60dc/src/process_data.py#L286">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/bf2b2583e7eaf542d0492f5a9bd271876c47b650/src/process_data.py#L293">
       
       (source)
     </a>
@@ -718,8 +736,8 @@ doesn't have selectable text or the program is a concept version.</p>
   <div class="functionHeader">
     
     @staticmethod<br />
-    <span class="py-keyword">def</span> <span class="py-defname">extractor_type_date_party_tags</span><span class="function-signature">(path: <code>str</code>) -&gt; <code>dict[<wbr></wbr>str, <wbr></wbr>str]</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/1a37c0c4ecf60c179d5a36e6a1b221105d2a60dc/src/process_data.py#L313">
+    <span class="py-keyword">def</span> <span class="py-defname">extractor_type_date_party_tags</span><span class="function-signature">(path: <code>str</code>) -&gt; <code><a href="process_data.PathInfoExtractor.ExtractionInfo.html" class="internal-link" title="process_data.PathInfoExtractor.ExtractionInfo">ExtractionInfo</a></code></span>:
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/bf2b2583e7eaf542d0492f5a9bd271876c47b650/src/process_data.py#L320">
       
       (source)
     </a>
@@ -734,7 +752,7 @@ doesn't have selectable text or the program is a concept version.</p>
     <div><p>Extract the election type, election date and party from the path.</p>
 <p>The path should be in the following format:
 .../{election_type}/{election_date}/{party}.pdf</p>
-<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">path:</span><code>str</code></td><td class="fieldArgDesc">The path to the program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code>dict[<wbr></wbr>str, <wbr></wbr>str]</code></td><td class="fieldArgDesc">The election type, election date and party.</td></tr></table></div>
+<table class="fieldTable"><tr class="fieldStart"><td class="fieldName" colspan="2">Parameters</td></tr><tr><td class="fieldArgContainer"><span class="fieldArg">path:</span><code>str</code></td><td class="fieldArgDesc">The path to the program.</td></tr><tr class="fieldStart"><td class="fieldName" colspan="2">Returns</td></tr><tr><td class="fieldArgContainer"><code><a href="process_data.PathInfoExtractor.ExtractionInfo.html" class="internal-link" title="process_data.PathInfoExtractor.ExtractionInfo">ExtractionInfo</a></code></td><td class="fieldArgDesc">The election type, election date and party.</td></tr></table></div>
   </div>
 </div><div class="basestaticmethod">
   
@@ -749,7 +767,7 @@ doesn't have selectable text or the program is a concept version.</p>
     
     @staticmethod<br />
     <span class="py-keyword">def</span> <span class="py-defname">get_election_type</span><span class="function-signature">(path: <code>str</code>) -&gt; <code>str</code></span>:
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/1a37c0c4ecf60c179d5a36e6a1b221105d2a60dc/src/process_data.py#L261">
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/bf2b2583e7eaf542d0492f5a9bd271876c47b650/src/process_data.py#L268">
       
       (source)
     </a>
@@ -775,8 +793,8 @@ the "manifests" folder in the path.</p><table class="fieldTable"><tr class="fiel
   </a>
   <div class="functionHeader">
     
-    <span class="py-defname">EXTRACTOR_REFERENCE</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>Callable[<wbr></wbr>[<wbr></wbr>str], <wbr></wbr>dict[<wbr></wbr>str, <wbr></wbr>str]]]</code> =
-    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/1a37c0c4ecf60c179d5a36e6a1b221105d2a60dc/src/process_data.py#L259">
+    <span class="py-defname">EXTRACTOR_REFERENCE</span>: <code>dict[<wbr></wbr>str, <wbr></wbr>Callable[<wbr></wbr>[<wbr></wbr>str], <wbr></wbr><a href="process_data.PathInfoExtractor.ExtractionInfo.html" class="internal-link" title="process_data.PathInfoExtractor.ExtractionInfo">ExtractionInfo</a>]]</code> =
+    <a class="sourceLink" href="https://github.com/MarcoStrijker/promisesPromises/tree/bf2b2583e7eaf542d0492f5a9bd271876c47b650/src/process_data.py#L265">
       
       (source)
     </a>
@@ -803,7 +821,7 @@ the "manifests" folder in the path.</p><table class="fieldTable"><tr class="fiel
   <div class="container">
     <a href="index.html">API Documentation</a> for <a href="https://github.com/MarcoStrijker/promisesPromises" class="projecthome">promisesPromises</a>,
   generated by <a href="https://github.com/twisted/pydoctor/">pydoctor</a>
-    24.3.3 at 2024-05-30 19:47:19.
+    24.3.3 at 2024-06-26 11:38:05.
   </div>
 
   <!-- Search related scripts needs to be loaded at the end of HTML 
