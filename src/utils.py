@@ -6,6 +6,7 @@ Functions:
   - calculate_remaining_processing_time: Calculates the remaining processing time for the remaining programs.
 
 """
+
 import os
 import sys
 from typing import Self, TextIO
@@ -135,7 +136,7 @@ def progress(count: int, total: int, suffix: object | str = None):
     percents = " " * (4 - len(percents)) + percents
 
     # Create the progress bar.
-    bar_graphics = '=' * filled_len + '-' * (bar_len - filled_len)
+    bar_graphics = "=" * filled_len + "-" * (bar_len - filled_len)
 
     trailing_spaces = 35 * " "
     # Print the progress bar
@@ -146,8 +147,10 @@ def progress(count: int, total: int, suffix: object | str = None):
         print()
 
 
-def calculate_remaining_processing_time(current: int, total: int, run_time: int | float) -> int:
-    """ Calculates the remaining processing time for the remaining programs.
+def calculate_remaining_processing_time(
+    current: int, total: int, run_time: int | float
+) -> int:
+    """Calculates the remaining processing time for the remaining programs.
 
     Args:
         current (int): The current index of the program.
