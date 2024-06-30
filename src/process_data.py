@@ -31,7 +31,9 @@ from typing import Callable, TypedDict
 import spacy
 from spacy import Language
 from spacy.tokens import Doc
-from spacy_syllables import SpacySyllables  # import is necessary for spacy to recognize the pipe
+from spacy_syllables import (
+    SpacySyllables,
+)  # import is necessary for spacy to recognize the pipe
 
 from pypdf import PdfReader
 
@@ -42,6 +44,7 @@ from src.utils import StdoutCollector
 @dataclass(slots=True)
 class Issuer:
     """A data class to represent a party or a group of parties."""
+
     name: str
     joined: bool = field(default=False, init=False)
     members: set[str] = field(default_factory=set, init=False)
@@ -126,7 +129,14 @@ class Program:
     text: str | None = None
     doc: Doc | None = None
 
-    def __init__(self, election_type: str, party: str, election_date: str, tags: list[str], path: str):
+    def __init__(
+        self,
+        election_type: str,
+        party: str,
+        election_date: str,
+        tags: list[str],
+        path: str,
+    ):
         """A class to store and manipulate data
 
         Arguments:
@@ -179,7 +189,7 @@ class Program:
         # Retrieve text from the file if it exists
         path = os.path.join(_processed_text_path, self.reference("txt"))
         if os.path.exists(path) and not FORCE_REPROCESSING:
-            with open(path, "r", encoding='utf-8') as f:
+            with open(path, "r", encoding="utf-8") as f:
                 self.text = f.read()
             return
 
@@ -208,7 +218,9 @@ class Program:
 
         # Check if there is text to create a doc from
         if self.text is None:
-            raise ValueError("No text to create a doc from. Call retrieve_text_from_pdf() first to retrieve the text.")
+            raise ValueError(
+                "No text to create a doc from. Call retrieve_text_from_pdf() first to retrieve the text."
+            )
 
         # Compute path to file
         path = os.path.join(_processed_doc_path, self.reference("spacy"))
@@ -235,7 +247,7 @@ class Program:
 
 
 class PathInfoExtractor:
-    """ A class containing methods to extract information from a manifest path.
+    """A class containing methods to extract information from a manifest path.
 
     When identifying programs, the path to the program contains information about the program, for example,
     election type, the election or the party. This class contains methods to extract this information from the path.
@@ -257,6 +269,7 @@ class PathInfoExtractor:
 
     class ExtractionInfo(TypedDict):
         """A type hint for the extraction info."""
+
         election_type: str
         election_date: str
         party: str
@@ -291,7 +304,9 @@ class PathInfoExtractor:
         return split_path[election_type_index]
 
     @staticmethod
-    def extract_tags_and_remove_tags_from_filename(filename: str) -> tuple[str, list[str]]:
+    def extract_tags_and_remove_tags_from_filename(
+        filename: str,
+    ) -> tuple[str, list[str]]:
         """Extract the tags from the filename.
 
         The tags are the words in the filename that are lead by a hashtag. These
@@ -337,16 +352,25 @@ class PathInfoExtractor:
         split_path = path.split(os.sep)
 
         # Get info from the path
-        filename, election_date, election_type = split_path[-1], split_path[-2], split_path[-3]
+        filename, election_date, election_type = (
+            split_path[-1],
+            split_path[-2],
+            split_path[-3],
+        )
 
         # Extract the tags from the filename
-        name, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(filename)
+        name, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(
+            filename
+        )
 
-        return {"election_type": election_type, "election_date": election_date, "party": name, "tags": tags}
+        return {
+            "election_type": election_type,
+            "election_date": election_date,
+            "party": name,
+            "tags": tags,
+        }
 
-    EXTRACTOR_REFERENCE = {
-        "TK": extractor_type_date_party_tags
-    }
+    EXTRACTOR_REFERENCE = {"TK": extractor_type_date_party_tags}
     """Reference to the methods to extract the information from the path for each election type"""
 
 
@@ -385,10 +409,12 @@ def identify_programs(target: str) -> list[Program]:
         election_type_abbrev = PathInfoExtractor.get_election_type(file)
 
         if election_type_abbrev not in PathInfoExtractor.EXTRACTOR_REFERENCE:
-            raise NotImplementedError(f"Unknown election type: {election_type_abbrev}. "
-                                      f"Election type not implemented in PathInfoExtractor.extractor_reference."
-                                      f"Currently unknown how to convert manifest path to program info. See"
-                                      f"PathInfoExtractor docstring for more information.")
+            raise NotImplementedError(
+                f"Unknown election type: {election_type_abbrev}. "
+                f"Election type not implemented in PathInfoExtractor.extractor_reference."
+                f"Currently unknown how to convert manifest path to program info. See"
+                f"PathInfoExtractor docstring for more information."
+            )
 
         extractor = PathInfoExtractor.EXTRACTOR_REFERENCE[election_type_abbrev]
 
@@ -470,7 +496,9 @@ def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
         # Snippets are all the substrings of the text with length snippet_size.
         # So first we get the first snippet_size characters, then it moves one character to the right and gets the next
         # snippet_size characters, etc.
-        snippets = [text[i:i + snippet_size] for i in range(0, len(text) - snippet_size)]
+        snippets = [
+            text[i : i + snippet_size] for i in range(0, len(text) - snippet_size)
+        ]
 
         # Count the number of occurrences of each snippet and get the two most common snippets.
         two_most_common = Counter(snippets).most_common(2)
@@ -486,7 +514,7 @@ def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
         # If the most common snippet occurs often enough, remove all occurrences of it.
         # TODO: improve replacement to prevent removing sentence structure. e.g.:
         # TODO: "This is a repeating slogan. " instead of ". This is a repeating slogan. "
-        text = text.replace(two_most_common[0][0], '')
+        text = text.replace(two_most_common[0][0], "")
 
         # Recursively call this function to check if there are more slogans.
         text = _remove_repeating_slogans(text, snippet_size - 1)
@@ -525,7 +553,9 @@ def process_all_programs() -> None:
         e = time.perf_counter()
 
         # Create a suffix to show the remaining time and the current program
-        remaining_time = utils.calculate_remaining_processing_time(i, len(_programs), e - s)
+        remaining_time = utils.calculate_remaining_processing_time(
+            i, len(_programs), e - s
+        )
         remaining_time = str(td(seconds=remaining_time))
 
         if i == len(_programs) - 1:
@@ -553,15 +583,22 @@ def get_all_programs() -> list[Program]:
         A list of all programs.
     """
     if not _programs_processed:
-        raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
-                           " before calling this function.")
+        raise RuntimeError(
+            "Programs have not been processed yet. To process them, run process_all_programs()"
+            " before calling this function."
+        )
 
     return _programs
 
 
-def get_programs(*, election_type: str | None = None, party: str | None = None,
-                 election_date: str | None = None, joined_issue: bool = False,
-                 tags: list[str] | None = None) -> list[Program]:
+def get_programs(
+    *,
+    election_type: str | None = None,
+    party: str | None = None,
+    election_date: str | None = None,
+    joined_issue: bool = False,
+    tags: list[str] | None = None,
+) -> list[Program]:
     """Return a list of programs based on the election type, party, election date and tags. If no parameters are given,
     all programs will be returned. If the programs have not been processed yet, or no programs are found, an exception
     will be raised.
@@ -583,36 +620,53 @@ def get_programs(*, election_type: str | None = None, party: str | None = None,
     """
 
     # Validate parameters
-    assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
+    assert (
+        isinstance(election_type, str) or election_type is None
+    ), "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
-    assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+    assert (
+        isinstance(election_date, str) or election_date is None
+    ), "Election date must be a string or None."
     assert isinstance(joined_issue, bool), "Joined issue must be a boolean."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     # Raise if programs have not been processed yet
     if not _programs_processed:
-        raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
-                           " before calling this function.")
+        raise RuntimeError(
+            "Programs have not been processed yet. To process them, run process_all_programs()"
+            " before calling this function."
+        )
 
     # Loop over all programs and find the programs that match the given parameters
-    found_programs = [p for p in _programs
-                      if (election_type is None or p.election_type == election_type)
-                      and (party is None or p.party == party)
-                      and (election_date is None or p.election_date == election_date)
-                      and p.joined_issue == joined_issue
-                      and (tags is None or all(tag in p.tags for tag in tags))]
+    found_programs = [
+        p
+        for p in _programs
+        if (election_type is None or p.election_type == election_type)
+        and (party is None or p.party == party)
+        and (election_date is None or p.election_date == election_date)
+        and p.joined_issue == joined_issue
+        and (tags is None or all(tag in p.tags for tag in tags))
+    ]
 
     # Return found programs if any are found
     if found_programs:
         return found_programs
 
     # Raise if no program is found
-    raise ValueError(f"No program found for election type: {election_type},"
-                     f" party: {party}, election date: {election_date}")
+    raise ValueError(
+        f"No program found for election type: {election_type},"
+        f" party: {party}, election date: {election_date}"
+    )
 
 
-def get_specific_program(*, election_type: str, party: str, election_date: str, joined_issue: bool = False,
-                         tags: list[str] | None = None) -> Program:
+def get_specific_program(
+    *,
+    election_type: str,
+    party: str,
+    election_date: str,
+    joined_issue: bool = False,
+    tags: list[str] | None = None,
+) -> Program:
     """Return a program by election type, party and election date. If no program is found, or the programs have not
     been processed yet, an exception will be raised.
 
@@ -635,15 +689,21 @@ def get_specific_program(*, election_type: str, party: str, election_date: str, 
     """
 
     # Validate parameters
-    assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
+    assert (
+        isinstance(election_type, str) or election_type is None
+    ), "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
-    assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
+    assert (
+        isinstance(election_date, str) or election_date is None
+    ), "Election date must be a string or None."
     assert isinstance(joined_issue, bool), "Joined issue must be a boolean."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
     if not _programs_processed:
-        raise RuntimeError("Programs have not been processed yet. To process them, run process_all_programs()"
-                           " before calling this function.")
+        raise RuntimeError(
+            "Programs have not been processed yet. To process them, run process_all_programs()"
+            " before calling this function."
+        )
 
     properties = (election_type, party, election_date, joined_issue)
 
@@ -660,8 +720,10 @@ def get_specific_program(*, election_type: str, party: str, election_date: str, 
         # Return found program
         return p
 
-    raise ValueError(f"No program found for election type: {election_type},"
-                     f" party: {party}, election date: {election_date}")
+    raise ValueError(
+        f"No program found for election type: {election_type},"
+        f" party: {party}, election date: {election_date}"
+    )
 
 
 FORCE_REPROCESSING = False
@@ -675,7 +737,9 @@ VERBOSE = False
 # TODO: Add more special characters
 # TODO: Refine regex patterns
 
-special_char_pattern: Pattern = re.compile(r'[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]')
+special_char_pattern: Pattern = re.compile(
+    r"[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]"
+)
 """Regex pattern that matches special characters"""
 
 newline_pattern: Pattern = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
