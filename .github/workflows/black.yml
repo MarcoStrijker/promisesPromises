@@ -28,5 +28,5 @@ jobs:
 
     - name: Format check
       run: |
-        black --check src
+        black src --check --line-length=120 --target-version=py311
       continue-on-error: false
