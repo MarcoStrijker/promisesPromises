@@ -718,7 +718,6 @@ VERBOSE = False
 # Define regex patterns to clean the parsed text from a pdf file
 # TODO: Add more special characters
 # TODO: Refine regex patterns
-
 special_char_pattern: Pattern[str] = re.compile(r"[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]")
 """Regex pattern that matches special characters"""
 
