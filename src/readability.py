@@ -38,7 +38,7 @@ def average_sentence_length(doc: Doc) -> float:
         float: The average sentence length.
     """
 
-    return np.mean([len(sent) for sent in doc.sents])
+    return float(np.mean([len(sent) for sent in doc.sents]))
 
 
 def average_word_length(doc: Doc) -> float:
@@ -52,7 +52,7 @@ def average_word_length(doc: Doc) -> float:
         float: The average word length.
     """
 
-    return np.mean([len(token) for token in doc if token.is_alpha])
+    return float(np.mean([len(token) for token in doc if token.is_alpha]))
 
 
 def average_syllables_per_word(doc: Doc) -> float:
@@ -66,7 +66,7 @@ def average_syllables_per_word(doc: Doc) -> float:
         float: The average number of syllables per word.
     """
 
-    return np.mean([token._.syllables_count for token in doc if token.is_alpha])
+    return float(np.mean([token._.syllables_count for token in doc if token.is_alpha]))
 
 
 def average_syllables_per_sentence(doc: Doc) -> float:
@@ -79,8 +79,7 @@ def average_syllables_per_sentence(doc: Doc) -> float:
     Returns:
         float: The average number of syllables per sentence.
     """
-
-    return np.mean([sum([token._.syllables_count for token in sent if token.is_alpha]) for sent in doc.sents])
+    return float(np.mean([sum([token._.syllables_count for token in sent if token.is_alpha]) for sent in doc.sents]))
 
 
 def average_words_per_sentence(doc: Doc) -> float:
@@ -94,7 +93,7 @@ def average_words_per_sentence(doc: Doc) -> float:
         float: The average number of words per sentence.
     """
 
-    return np.mean([len(sent) for sent in doc.sents])
+    return float(np.mean([len(sent) for sent in doc.sents]))
 
 
 def entropy(doc: Doc) -> float:
@@ -120,4 +119,4 @@ def entropy(doc: Doc) -> float:
 
     # Calculate the entropy
     # See: https://www.princeton.edu/~wbialek/rome/refs/shannon_51.pdf
-    return -sum(relative_freq[word] * np.log2(relative_freq[word]) for word in relative_freq)
+    return -float(sum(relative_freq[word] * np.log2(relative_freq[word]) for word in relative_freq))
