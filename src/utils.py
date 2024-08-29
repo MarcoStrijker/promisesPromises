@@ -61,7 +61,7 @@ class StdoutCollector:
         sys.stderr = self  # type: ignore
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb) -> None:
+    def __exit__(self, exc_type: object, exc_val: object, exc_tb: object) -> None:
         """Exits the context manager and sets the standard output back to the original.
 
         Args:
@@ -95,7 +95,7 @@ def get_pdf_files_recursive(target: str) -> set[str]:
     return file_locations
 
 
-def progress(count: int, total: int, suffix: object | str = None):
+def progress(count: int, total: int, suffix: object | str = None) -> None:
     """
     Prints a progress bar to the console. Pycharm does not support this out of the box, so
     set emulate terminal in output console to true in the run configuration.
