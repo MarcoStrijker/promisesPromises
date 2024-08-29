@@ -28,5 +28,5 @@ jobs:
 
     - name: Run mypy
       run: |
-        mypy src --python-version=3.11 --pretty --scripts-are-modules --follow-imports=skip --ignore-missing-imports
+        mypy src --python-version=3.11 --pretty --scripts-are-modules --follow-imports=skip --ignore-missing-imports --strict
       continue-on-error: false
