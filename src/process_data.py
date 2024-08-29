@@ -218,9 +218,7 @@ class Program:
 
         # Check if there is text to create a doc from
         if self.text is None:
-            raise ValueError(
-                "No text to create a doc from. Call retrieve_text_from_pdf() first to retrieve the text."
-            )
+            raise ValueError("No text to create a doc from. Call retrieve_text_from_pdf() first to retrieve the text.")
 
         # Compute path to file
         path = os.path.join(_processed_doc_path, self.reference("spacy"))
@@ -359,9 +357,7 @@ class PathInfoExtractor:
         )
 
         # Extract the tags from the filename
-        name, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(
-            filename
-        )
+        name, tags = PathInfoExtractor.extract_tags_and_remove_tags_from_filename(filename)
 
         return {
             "election_type": election_type,
@@ -496,9 +492,7 @@ def _remove_repeating_slogans(text: str, start_size: int | None = None) -> str:
         # Snippets are all the substrings of the text with length snippet_size.
         # So first we get the first snippet_size characters, then it moves one character to the right and gets the next
         # snippet_size characters, etc.
-        snippets = [
-            text[i : i + snippet_size] for i in range(0, len(text) - snippet_size)
-        ]
+        snippets = [text[i : i + snippet_size] for i in range(0, len(text) - snippet_size)]
 
         # Count the number of occurrences of each snippet and get the two most common snippets.
         two_most_common = Counter(snippets).most_common(2)
@@ -553,9 +547,7 @@ def process_all_programs() -> None:
         e = time.perf_counter()
 
         # Create a suffix to show the remaining time and the current program
-        remaining_time = utils.calculate_remaining_processing_time(
-            i, len(_programs), e - s
-        )
+        remaining_time = utils.calculate_remaining_processing_time(i, len(_programs), e - s)
         remaining_time = str(td(seconds=remaining_time))
 
         if i == len(_programs) - 1:
@@ -620,13 +612,9 @@ def get_programs(
     """
 
     # Validate parameters
-    assert (
-        isinstance(election_type, str) or election_type is None
-    ), "Election type must be a string or None."
+    assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
-    assert (
-        isinstance(election_date, str) or election_date is None
-    ), "Election date must be a string or None."
+    assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
     assert isinstance(joined_issue, bool), "Joined issue must be a boolean."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
@@ -654,8 +642,7 @@ def get_programs(
 
     # Raise if no program is found
     raise ValueError(
-        f"No program found for election type: {election_type},"
-        f" party: {party}, election date: {election_date}"
+        f"No program found for election type: {election_type}," f" party: {party}, election date: {election_date}"
     )
 
 
@@ -689,13 +676,9 @@ def get_specific_program(
     """
 
     # Validate parameters
-    assert (
-        isinstance(election_type, str) or election_type is None
-    ), "Election type must be a string or None."
+    assert isinstance(election_type, str) or election_type is None, "Election type must be a string or None."
     assert isinstance(party, str) or party is None, "Party must be a string or None."
-    assert (
-        isinstance(election_date, str) or election_date is None
-    ), "Election date must be a string or None."
+    assert isinstance(election_date, str) or election_date is None, "Election date must be a string or None."
     assert isinstance(joined_issue, bool), "Joined issue must be a boolean."
     assert isinstance(tags, list) or tags is None, "Tags must be a list or None."
 
@@ -721,8 +704,7 @@ def get_specific_program(
         return p
 
     raise ValueError(
-        f"No program found for election type: {election_type},"
-        f" party: {party}, election date: {election_date}"
+        f"No program found for election type: {election_type}," f" party: {party}, election date: {election_date}"
     )
 
 
@@ -737,9 +719,7 @@ VERBOSE = False
 # TODO: Add more special characters
 # TODO: Refine regex patterns
 
-special_char_pattern: Pattern[str] = re.compile(
-    r"[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]"
-)
+special_char_pattern: Pattern[str] = re.compile(r"[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]")
 """Regex pattern that matches special characters"""
 
 newline_pattern: Pattern[str] = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")

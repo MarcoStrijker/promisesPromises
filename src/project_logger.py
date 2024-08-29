@@ -34,9 +34,7 @@ console = logging.StreamHandler()
 console.setLevel(logging.INFO)
 
 # Set the format of the logging, including the location of the logger for this logger
-formatter = logging.Formatter(
-    "%(asctime)s - %(location)s - %(levelname)s - %(message)s"
-)
+formatter = logging.Formatter("%(asctime)s - %(location)s - %(levelname)s - %(message)s")
 console.setFormatter(formatter)
 project_wide_logger.addHandler(console)
 

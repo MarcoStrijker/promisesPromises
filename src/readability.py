@@ -80,14 +80,7 @@ def average_syllables_per_sentence(doc: Doc) -> float:
         float: The average number of syllables per sentence.
     """
 
-    return float(
-        np.mean(
-            [
-                sum([token._.syllables_count for token in sent if token.is_alpha])
-                for sent in doc.sents
-            ]
-        )
-    )
+    return float(np.mean([sum([token._.syllables_count for token in sent if token.is_alpha]) for sent in doc.sents]))
 
 
 def average_words_per_sentence(doc: Doc) -> float:
