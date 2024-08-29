@@ -49,7 +49,7 @@ class Issuer:
     joined: bool = field(default=False, init=False)
     members: set[str] = field(default_factory=set, init=False)
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Post-initialization function to split the party name into members."""
         self.joined = "+" in self.name
         self.members = set(self.name.split("+"))
@@ -236,7 +236,7 @@ class Program:
         # Save doc to disk
         self.doc.to_disk(path)
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """Return a string representation of the program."""
         name = f"{self.election_type} - {self.party} - {self.election_date}"
 
@@ -710,7 +710,7 @@ def get_specific_program(
     # Find program
     for p in _programs:
         # Check if program matches properties
-        if (p.election_type, p.party, p.election_date, p.joined_issue) != properties:
+        if (p.election_type, p.party.name, p.election_date, p.joined_issue) != properties:
             continue
 
         # Check if program has all tags
@@ -737,44 +737,44 @@ VERBOSE = False
 # TODO: Add more special characters
 # TODO: Refine regex patterns
 
-special_char_pattern: Pattern = re.compile(
+special_char_pattern: Pattern[str] = re.compile(
     r"[▶◀·•▪▫▬▭▮▯▰▱◆◇◈◊○◌◍◎●◐◑◒◓◔◕◖◗◘◙◢◣◤◥◦◧◨◩◪◫◬◭◮◯◸◹◺◻◼◽◾◿]"
 )
 """Regex pattern that matches special characters"""
 
-newline_pattern: Pattern = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
+newline_pattern: Pattern[str] = re.compile(r"(?<=\w)(\s*\n\s*)+(?=\w)")
 """Regex pattern that matches new lines that are present inbetween words"""
 
-double_space_pattern: Pattern = re.compile(r"\s+")
+double_space_pattern: Pattern[str] = re.compile(r"\s+")
 """Regex pattern that matches multiple spaces"""
 
-double_dot_pattern: Pattern = re.compile(r"(\s*\.\s*)+")
+double_dot_pattern: Pattern[str] = re.compile(r"(\s*\.\s*)+")
 """Regex pattern that matches multiple dots, whitespace is allowed between and around the dots"""
 
-tab_pattern: Pattern = re.compile(r"\t")
+tab_pattern: Pattern[str] = re.compile(r"\t")
 """Regex pattern that matches tabs"""
 
-page_num_pattern: Pattern = re.compile(r"\n+\s*\d+\s*\n+")
+page_num_pattern: Pattern[str] = re.compile(r"\n+\s*\d+\s*\n+")
 """Regex pattern that matches page numbers, which is a number surrounded by newlines
 and possibly spaces on either side"""
 
-large_numbers_pattern: Pattern = re.compile(r"[\d\s\n]{9,}")
+large_numbers_pattern: Pattern[str] = re.compile(r"[\d\s\n]{9,}")
 """Regex pattern that matches large numbers, which is a number with potentially spaces between these numbers.
 Only matches when digits, spaces and new lines that are 9 characters or longer"""
 
-form_feed_pattern: Pattern = re.compile(r"\f")
+form_feed_pattern: Pattern[str] = re.compile(r"\f")
 """Regex pattern that matches form feeds"""
 
-hyphenation_pattern: Pattern = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
+hyphenation_pattern: Pattern[str] = re.compile(r"-\x02|(?<=\w)-\s*\n\s*(?=\w+)")
 """Regex pattern that matches hyphenation. When hyphenation occurs, one word is split in two and a hyphen is 
 added at the end of the first part, however, when extracting the text from the pdf, the hyphen should be 
 removed and the two parts should be joined together."""
 
-single_char_pattern: Pattern = re.compile(r"(?<=\s)\w(?=\s|$)")
+single_char_pattern: Pattern[str] = re.compile(r"(?<=\s)\w(?=\s|$)")
 """Regex pattern that matches single characters, which are characters that 
 are surrounded by whitespace or the end of the string"""
 
-single_char_start_pattern: Pattern = re.compile(r"^\w\s")
+single_char_start_pattern: Pattern[str] = re.compile(r"^\w\s")
 """Regex pattern that matches single characters at the start of the string"""
 
 # Define paths
