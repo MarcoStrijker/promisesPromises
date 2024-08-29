@@ -57,8 +57,8 @@ class StdoutCollector:
         """Enters the context manager and sets the standard output to this class."""
         self._stdout = sys.stdout
         self._stderr = sys.stderr
-        sys.stdout = self  # type: ignore
-        sys.stderr = self  # type: ignore
+        sys.stdout = self
+        sys.stderr = self
         return self
 
     def __exit__(self, exc_type: object, exc_val: object, exc_tb: object) -> None:
@@ -69,8 +69,8 @@ class StdoutCollector:
             exc_val: The exception value.
             exc_tb: The exception traceback.
         """
-        sys.stdout = self._stdout  # type: ignore
-        sys.stderr = self._stderr  # type: ignore
+        sys.stdout = self._stdout
+        sys.stderr = self._stderr
 
 
 def get_pdf_files_recursive(target: str) -> set[str]:
