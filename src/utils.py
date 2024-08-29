@@ -147,9 +147,7 @@ def progress(count: int, total: int, suffix: object | str = None):
         print()
 
 
-def calculate_remaining_processing_time(
-    current: int, total: int, run_time: int | float
-) -> int:
+def calculate_remaining_processing_time(current: int, total: int, run_time: int | float) -> int:
     """Calculates the remaining processing time for the remaining programs.
 
     Args:
