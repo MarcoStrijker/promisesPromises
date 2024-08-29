@@ -82,7 +82,6 @@ def average_syllables_per_sentence(doc: Doc) -> float:
     return float(np.mean([sum([token._.syllables_count for token in sent if token.is_alpha]) for sent in doc.sents]))
 
 
-
 def average_words_per_sentence(doc: Doc) -> float:
     """
     Calculates the average number of words per sentence for a given text.
@@ -121,4 +120,3 @@ def entropy(doc: Doc) -> float:
     # Calculate the entropy
     # See: https://www.princeton.edu/~wbialek/rome/refs/shannon_51.pdf
     return -float(sum(relative_freq[word] * np.log2(relative_freq[word]) for word in relative_freq))
-
